@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
-import { Observable } from 'rxjs';
+import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
 
 @Injectable({
@@ -9,19 +8,19 @@ import { AuthService } from 'src/app/core/services/auth/auth.service';
 export class RoleGuardGuard implements CanActivate {
   
   constructor(
-    private authSerivce: AuthService,
+    private authService: AuthService,
     private router: Router
   ) {}
 
   canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    return this.isAthorized(route);
+    _route: ActivatedRouteSnapshot,
+    _state: RouterStateSnapshot): boolean {
+    return this.isAuthorized();
   }
 
-  private isAthorized(route: ActivatedRouteSnapshot): boolean {
-    const role = 'Admin';
-    if(this.authSerivce.roleUser?.toUpperCase != role.toUpperCase) {
+  private isAuthorized(): boolean {
+    const requiredRole = 'ADMIN';
+    if (this.authService.roleUser?.toUpperCase() !== requiredRole) {
       this.router.navigate(['/']);
       return false;
     }

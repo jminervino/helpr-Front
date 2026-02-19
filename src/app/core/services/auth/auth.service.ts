@@ -2,8 +2,8 @@ import { PessoasService } from './../pessoas/pessoas.service';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { API_CONFIG } from 'src/app/config/api.config';
 import { retry } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +16,7 @@ export class AuthService {
 
   login(email: string, senha: string) {
     const creds = { email, senha };
-    return this.http.post(`${API_CONFIG.baseUrl.prod}/login`, creds, {
+    return this.http.post(`${environment.api.baseUrl}/login`, creds, {
       responseType: 'text',
       observe: 'response',
     });
@@ -77,7 +77,7 @@ export class AuthService {
     }
 
     return null;
-    
+
   }
 
   onLogin(token: string) {

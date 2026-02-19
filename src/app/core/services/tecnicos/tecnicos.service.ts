@@ -1,14 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { API_CONFIG } from 'src/app/config/api.config';
+import { environment } from 'src/environments/environment';
 import { Tecnico } from '../../models/pessoa';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TecnicosService {
-  tecnicosUrl = `${API_CONFIG.baseUrl.prod}/service/tecnicos`;
+  tecnicosUrl = `${environment.api.baseUrl}/service/tecnicos`;
   constructor(private http: HttpClient) {}
 
   findAll(): Observable<Tecnico[]> {

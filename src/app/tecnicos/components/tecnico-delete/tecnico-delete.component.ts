@@ -7,16 +7,12 @@ import { Tecnico } from 'src/app/core/models/pessoa';
   templateUrl: './tecnico-delete.component.html',
   styleUrls: ['./tecnico-delete.component.scss']
 })
-export class TecnicoDeleteComponent implements OnInit {
+export class TecnicoDeleteComponent {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public tecnico: Tecnico,
     private ref: MatDialogRef<TecnicoDeleteComponent>
   ) { }
-
-  ngOnInit(): void {
-    throw new Error('Method not implemented.');
-  }
 
   onSubmit() {
     this.ref.close({ tecnico: this.tecnico });

@@ -7,15 +7,12 @@ import { Cliente } from 'src/app/core/models/pessoa';
   templateUrl: './cliente-delete.component.html',
   styleUrls: ['./cliente-delete.component.scss']
 })
-export class ClienteDeleteComponent implements OnInit {
+export class ClienteDeleteComponent {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public cliente: Cliente,
     private ref: MatDialogRef<ClienteDeleteComponent>
   ) { }
-  ngOnInit(): void {
-    throw new Error('Method not implemented.');
-  }
 
   onSubmit() {
     this.ref.close({ cliente: this.cliente });

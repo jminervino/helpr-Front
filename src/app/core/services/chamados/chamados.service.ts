@@ -1,14 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { API_CONFIG } from 'src/app/config/api.config';
+import { environment } from 'src/environments/environment';
 import { Chamado } from '../../models/chamado';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ChamadosService {
-  chamadosUrl = `${API_CONFIG.baseUrl.prod}/service/chamados`;
+  chamadosUrl = `${environment.api.baseUrl}/service/chamados`;
   chamadosRelatorio = `${this.chamadosUrl}/relatorios`;
 
   constructor(private http: HttpClient) {}
