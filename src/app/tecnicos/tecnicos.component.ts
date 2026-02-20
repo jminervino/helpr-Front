@@ -7,7 +7,7 @@ import { EMPTY, filter, Observable, Subject, switchMap, takeUntil } from 'rxjs';
 import { Tecnico } from '../core/models/pessoa';
 import { TecnicosService } from '../core/services/tecnicos/tecnicos.service';
 import { TecnicoDetailComponent } from './components/tecnico-detail/tecnico-detail.component';
-import { TecnicoDeleteComponent } from './components/tecnico-delete/tecnico-delete.component';
+import { ConfirmDialogComponent } from '../shared/components/confirm-dialog/confirm-dialog.component';
 
 
 
@@ -62,9 +62,12 @@ export class TecnicosComponent implements OnInit, OnDestroy {
   }
 
   onClickDelete(tecnico: Tecnico, id: number) {
-    const ref = this.dialog.open(TecnicoDeleteComponent, {
+    const ref = this.dialog.open(ConfirmDialogComponent, {
       minWidth: '400px',
-      data: tecnico,
+      data: {
+        title: 'Deletar tecnico',
+        message: `Deseja deletar ${tecnico.nome}?`,
+      },
     });
     ref.afterClosed().pipe(
       filter((result) => !!result),

@@ -9,7 +9,6 @@ import {FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxMaskModule } from 'ngx-mask';
 import { SharedModule } from '../shared/shared.module';
 import { ClienteAbertoComponent } from './components/cliente-aberto/cliente-aberto.component';
-import { ClienteDeleteComponent } from './components/cliente-delete/cliente-delete.component';
 import { ClienteDetailComponent } from './components/cliente-detail/cliente-detail.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -27,7 +26,6 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     ClienteUpdateComponent,
     ClienteCreateComponent,
     ClienteAbertoComponent,
-    ClienteDeleteComponent,
     ClienteDetailComponent,
   ],
   imports: [

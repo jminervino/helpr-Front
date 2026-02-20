@@ -6,8 +6,8 @@ import { EMPTY, filter, Observable, Subject, switchMap, takeUntil } from 'rxjs';
 import { Cliente } from '../core/models/pessoa';
 import { ClientesService } from '../core/services/clientes/clientes.service';
 import { ClienteAbertoComponent } from './components/cliente-aberto/cliente-aberto.component';
-import { ClienteDeleteComponent } from './components/cliente-delete/cliente-delete.component';
 import { ClienteDetailComponent } from './components/cliente-detail/cliente-detail.component';
+import { ConfirmDialogComponent } from '../shared/components/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-clientes',
@@ -37,9 +37,12 @@ export class ClientesComponent implements OnInit, OnDestroy {
   ) {}
 
   onClickDelete(cliente: Cliente, id: number) {
-    const ref = this.dialog.open(ClienteDeleteComponent, {
+    const ref = this.dialog.open(ConfirmDialogComponent, {
       minWidth: '400px',
-      data: cliente,
+      data: {
+        title: 'Deletar cliente',
+        message: `Deseja deletar ${cliente.nome}?`,
+      },
     });
     ref.afterClosed().pipe(
       filter((result) => !!result),
