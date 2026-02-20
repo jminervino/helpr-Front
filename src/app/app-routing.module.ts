@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AdminComponent } from './admin/components/admin/admin/admin.component';
 import { AuthLogadoGuard } from './auth/guards/auth-logado/auth-logado.guard';
 import { AuthGuard } from './auth/guards/auth/auth.guard';
 import { RoleGuardGuard } from './auth/guards/roleGuard/role-guard.guard';
@@ -41,10 +40,9 @@ const routes: Routes = [
       },
       {
         path: 'admin',
-        component: AdminComponent,
         loadChildren: () =>
           import('./admin/admin.module').then((m) => m.AdminModule),
-          canActivate: [RoleGuardGuard]
+        canActivate: [RoleGuardGuard]
       },
       {
         path: 'manual-do-software',

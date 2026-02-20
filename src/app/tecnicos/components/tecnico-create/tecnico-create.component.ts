@@ -41,18 +41,8 @@ export class TecnicoCreateComponent implements OnInit {
         this.toast.success('Tecnico criado');
         this.router.navigate(['tecnicos']);
       },
-      error: (err) => {
+      error: () => {
         ref.close();
-        switch (err.status) {
-          case 403:
-            return this.toast.error('Ação não permitida');
-          case 409:
-            return this.toast.error(err.error.message);
-          default:
-            return this.toast.error(
-              `Um erro aconteceu: ${err.error.message ?? ''}`
-            );
-        }
       },
     });
   }

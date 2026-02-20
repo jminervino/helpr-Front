@@ -41,18 +41,8 @@ export class ClienteCreateComponent implements OnInit {
         this.toast.success('Cliente criado');
         this.router.navigate(['clientes']);
       },
-      error: (err) => {
+      error: () => {
         ref.close();
-        switch (err.status) {
-          case 403:
-            return this.toast.error('Ação não permitida');
-          case 409:
-            return this.toast.error(err.error.message);
-          default:
-            return this.toast.error(
-              `Um erro aconteceu: ${err.error.message ?? ''}`
-            );
-        }
       },
     });
   }

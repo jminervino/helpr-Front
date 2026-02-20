@@ -50,16 +50,6 @@ export class ClientesComponent implements OnInit, OnDestroy {
         this.clientes$ = this.clientesService.findAll();
         this.toast.success('Usuário deletado');
       },
-      error: (err) => {
-        switch (err.status) {
-          case 403:
-            return this.toast.error('Usuário não tem permissão');
-          case 409:
-            return this.toast.error(err.error.message);
-          default:
-            return this.toast.error('Um erro aconteceu');
-        }
-      },
     });
   }
  onClickCliente(id: number){

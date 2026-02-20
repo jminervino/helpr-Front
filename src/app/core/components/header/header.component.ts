@@ -1,6 +1,6 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Observable, Subject, takeUntil } from 'rxjs';
+import { filter, Observable, Subject, takeUntil } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { AuthService } from '../../services/auth/auth.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -17,7 +17,7 @@ interface MenuItem {
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent implements OnDestroy {
+export class HeaderComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
   isHandset$: Observable<boolean> = this.breakpointObserver
     .observe(Breakpoints.Handset)
@@ -47,11 +47,6 @@ export class HeaderComponent implements OnDestroy {
 
   ngOnInit(): void {
     this.tokenExpirationDate = this.authService.getTokenExpirationDate();
-    if (this.authService.isAuthenticated && !this.authService.roleUser) {
-      this.authService.loadUserRole().pipe(
-        takeUntil(this.destroy$)
-      ).subscribe();
-    }
   }
 
   logout(): void {
@@ -60,8 +55,11 @@ export class HeaderComponent implements OnDestroy {
     });
 
     dialogRef.afterClosed().pipe(
+      filter((result) => !!result),
       takeUntil(this.destroy$)
-    ).subscribe();
+    ).subscribe(() => {
+      this.authService.onLogout();
+    });
   }
 
   ngOnDestroy(): void {

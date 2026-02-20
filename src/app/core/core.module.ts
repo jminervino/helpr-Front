@@ -4,7 +4,6 @@ import { HeaderComponent } from './components/header/header.component';
 import { RouterModule } from '@angular/router';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { DialogComponent } from './components/dialog/dialog.component';
-import { AdminModule } from '../admin/admin.module';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
@@ -21,7 +20,6 @@ import { MatTooltipModule } from '@angular/material/tooltip';
   imports: [
     CommonModule,
     RouterModule,
-    AdminModule,
     MatToolbarModule,
     MatSidenavModule,
     MatListModule,

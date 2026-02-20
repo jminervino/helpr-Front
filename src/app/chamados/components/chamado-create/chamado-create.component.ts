@@ -52,17 +52,8 @@ export class ChamadoCreateComponent implements OnInit {
         this.toast.success('Chamado adicionado');
         this.router.navigate(['chamados']);
       },
-      error: (err) => {
-        console.log(err);
+      error: () => {
         ref.close();
-        switch (err.status) {
-          case 403:
-            return this.toast.error('Ação não permitida');
-          default:
-            return this.toast.error(
-              `Um erro aconteceu: ${err.error.message ?? ''}`
-            );
-        }
       },
     });
   }

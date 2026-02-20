@@ -63,16 +63,8 @@ export class ChamadoUpdateComponent implements OnInit, OnDestroy {
         this.toast.success('Chamado atualizado!');
         this.router.navigate(['chamados']);
       },
-      error: (err) => {
+      error: () => {
         ref.close();
-        switch (err.status) {
-          case 403:
-            return this.toast.error('Ação não permitida');
-          default:
-            return this.toast.error(
-              `Um erro aconteceu: ${err.error.message ?? ''}`
-            );
-        }
       },
     });
   }

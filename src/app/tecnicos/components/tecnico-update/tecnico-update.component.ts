@@ -53,18 +53,8 @@ export class TecnicoUpdateComponent implements OnInit, OnDestroy {
         this.toast.success('Tecnico atualizado');
         this.router.navigate(['tecnicos']);
       },
-      error: (err) => {
+      error: () => {
         ref.close();
-        switch (err.status) {
-          case 403:
-            return this.toast.error('Ação não permitida');
-          case 409:
-            return this.toast.error(err.error.message);
-          default:
-            return this.toast.error(
-              `Um erro aconteceu: ${err.error.message ?? ''}`
-            );
-        }
       },
     });
   }
