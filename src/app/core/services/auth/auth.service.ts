@@ -30,7 +30,9 @@ export class AuthService {
   userInfo() {
     this.setEmailFromToken();
 
-    return this.pessoasService.findByEmail(this.emailUser!).pipe(retry(5));
+    return this.pessoasService.findByEmail(this.emailUser!).pipe(
+      retry({ count: 2, delay: 1000 })
+    );
   }
 
   userRole(): string | null {
@@ -90,7 +92,7 @@ export class AuthService {
   }
 
   onLogout() {
-    localStorage.clear();
+    localStorage.removeItem('token');
     this.roleSubject.next(null);
     this.emailUser = undefined;
   }

@@ -1,10 +1,11 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { Status } from 'src/app/core/models/chamado';
 
 @Component({
   selector: 'app-status-chip',
   templateUrl: './status-chip.component.html',
   styleUrls: ['./status-chip.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class StatusChipComponent implements OnInit {
   @Input() status!: Status;

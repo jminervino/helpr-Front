@@ -77,4 +77,8 @@ export class ClientesComponent implements OnInit, OnDestroy {
     this.destroy$.next();
     this.destroy$.complete();
   }
+
+  trackById(index: number, item: { id?: number }): number {
+    return item.id ?? index;
+  }
 }

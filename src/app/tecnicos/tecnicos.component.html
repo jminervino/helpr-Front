@@ -1,7 +1,7 @@
 <div class="mat-elevation-z8 container"  *ngIf="tecnicos$ | async as dataSource; else loading">
   <h2>Lista de técnicos</h2>
   <div>
-    <table class="table-wrapper" mat-table [dataSource]="dataSource">
+    <table class="table-wrapper" mat-table [dataSource]="dataSource" [trackBy]="trackById">
       <ng-container matColumnDef="id">
         <th class="bradius" mat-header-cell *matHeaderCellDef style="min-width: 30px;">#</th>
         <td mat-cell *matCellDef="let tecnico">{{ tecnico.id }}</td>

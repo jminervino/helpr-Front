@@ -67,6 +67,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
+  trackByLink(index: number, item: MenuItem): string {
+    return item.link;
+  }
+
   itensMenu: MenuItem[] = [
     {
       link: '/home',

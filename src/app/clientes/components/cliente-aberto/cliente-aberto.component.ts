@@ -27,4 +27,8 @@ export class ClienteAbertoComponent implements OnInit {
     this.chamados$ = this.chamadoService.findReportChamadoCliente(this.data)
   }
 
+  trackById(index: number, item: { id: number }): number {
+    return item.id;
+  }
+
 }

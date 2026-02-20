@@ -90,4 +90,8 @@ export class TecnicosComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
+  trackById(index: number, item: { id?: number }): number {
+    return item.id ?? index;
+  }
+
 }
