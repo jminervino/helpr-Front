@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Validators, UntypedFormBuilder } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -6,13 +6,15 @@ import { HotToastService } from '@ngneat/hot-toast';
 import { Tecnico } from 'src/app/core/models/pessoa';
 import { TecnicosService } from 'src/app/core/services/tecnicos/tecnicos.service';
 import { someTrue, trueIndexes, profileChecked } from 'src/app/shared/utils';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-tecnico-update',
   templateUrl: './tecnico-update.component.html',
   styleUrls: ['./tecnico-update.component.scss']
 })
-export class TecnicoUpdateComponent implements OnInit {
+export class TecnicoUpdateComponent implements OnInit, OnDestroy {
+  private destroy$ = new Subject<void>();
   errorMsg = '';
   error = false;
   loading = true;
@@ -43,7 +45,9 @@ export class TecnicoUpdateComponent implements OnInit {
     
     const ref = this.toast.loading('Atualizando tecnico');
 
-    this.tecnicosService.update(tecnico).subscribe({
+    this.tecnicosService.update(tecnico).pipe(
+      takeUntil(this.destroy$)
+    ).subscribe({
       next: () => {
         ref.close();
         this.toast.success('Tecnico atualizado');
@@ -67,7 +71,9 @@ export class TecnicoUpdateComponent implements OnInit {
 
   ngOnInit(): void {
     const id = this.route.snapshot.params['id'];
-    this.tecnicosService.findById(id).subscribe({
+    this.tecnicosService.findById(id).pipe(
+      takeUntil(this.destroy$)
+    ).subscribe({
       next: (tecnico) => {
         tecnico.senha = '';
         const perfils = profileChecked(tecnico.perfils as string[]);
@@ -83,6 +89,11 @@ export class TecnicoUpdateComponent implements OnInit {
         this.loading = false;
       },
     });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
 }

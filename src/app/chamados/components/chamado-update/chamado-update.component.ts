@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { UntypedFormBuilder, Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HotToastService } from '@ngneat/hot-toast';
-import { delay, EMPTY, Observable, tap } from 'rxjs';
+import { delay, EMPTY, Observable, Subject, takeUntil, tap } from 'rxjs';
 import { Cliente, Tecnico } from 'src/app/core/models/pessoa';
 import { ChamadosService } from 'src/app/core/services/chamados/chamados.service';
 import { ClientesService } from 'src/app/core/services/clientes/clientes.service';
@@ -14,7 +14,8 @@ import { TecnicosService } from 'src/app/core/services/tecnicos/tecnicos.service
   templateUrl: './chamado-update.component.html',
   styleUrls: ['./chamado-update.component.scss'],
 })
-export class ChamadoUpdateComponent implements OnInit {
+export class ChamadoUpdateComponent implements OnInit, OnDestroy {
+  private destroy$ = new Subject<void>();
   clientes$: Observable<Cliente[]> = EMPTY;
   tecnicos$: Observable<Tecnico[]> = EMPTY;
   errorMsg = '';
@@ -44,7 +45,9 @@ export class ChamadoUpdateComponent implements OnInit {
 
   onSubmit() {
     const ref = this.toast.loading('Atualizando chamado...');
-    this.chamadosService.update(this.chamadoForm.value).subscribe({
+    this.chamadosService.update(this.chamadoForm.value).pipe(
+      takeUntil(this.destroy$)
+    ).subscribe({
       next: () => {
         ref.close();
         this.toast.success('Chamado atualizado!');
@@ -77,7 +80,9 @@ export class ChamadoUpdateComponent implements OnInit {
     }));
 
     const id = this.route.snapshot.params['id'];
-    this.chamadosService.findById(id).subscribe({
+    this.chamadosService.findById(id).pipe(
+      takeUntil(this.destroy$)
+    ).subscribe({
       next: (chamado) => {
         this.chamadoForm.patchValue(chamado);
         this.loading = false;
@@ -90,5 +95,10 @@ export class ChamadoUpdateComponent implements OnInit {
         this.loading = false;
       },
     });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { HotToastService } from '@ngneat/hot-toast';
-import { EMPTY, Observable} from 'rxjs';
+import { EMPTY, Observable, Subject, takeUntil } from 'rxjs';
 import { Cliente } from '../core/models/pessoa';
 import { ClientesService } from '../core/services/clientes/clientes.service';
 import { ClienteAbertoComponent } from './components/cliente-aberto/cliente-aberto.component';
@@ -14,7 +14,8 @@ import { ClienteDetailComponent } from './components/cliente-detail/cliente-deta
   templateUrl: './clientes.component.html',
   styleUrls: ['./clientes.component.scss'],
 })
-export class ClientesComponent implements OnInit {
+export class ClientesComponent implements OnInit, OnDestroy {
+  private destroy$ = new Subject<void>();
   displayedColumns: string[] = [
     'id',
     'nome',
@@ -40,10 +41,14 @@ export class ClientesComponent implements OnInit {
       minWidth: '400px',
       data: cliente,
     });
-    ref.afterClosed().subscribe({
+    ref.afterClosed().pipe(
+      takeUntil(this.destroy$)
+    ).subscribe({
       next: (result) => {
         if (result) {
-          this.clientesService.delete(id).subscribe({
+          this.clientesService.delete(id).pipe(
+            takeUntil(this.destroy$)
+          ).subscribe({
             next: () => {
               this.clientes$ = this.clientesService.findAll();
               this.toast.success('Usuário deletado');
@@ -66,11 +71,10 @@ export class ClientesComponent implements OnInit {
     });
   }
  onClickCliente(id: number){
-    const chamadosClientes = this.dialog.open(ClienteAbertoComponent,{
+    this.dialog.open(ClienteAbertoComponent,{
       data: id,
       width: '950px'
     });
-    console.log(id)
   }
 
   openDialog(tecnico: Cliente): void {
@@ -82,5 +86,10 @@ export class ClientesComponent implements OnInit {
 
   ngOnInit(): void {
     this.clientes$ = this.clientesService.findAll();
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

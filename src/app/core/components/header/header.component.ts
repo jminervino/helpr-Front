@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Observable } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { AuthService } from '../../services/auth/auth.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -17,8 +17,8 @@ interface MenuItem {
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent {
-  userAdmin!: boolean;
+export class HeaderComponent implements OnDestroy {
+  private destroy$ = new Subject<void>();
   isHandset$: Observable<boolean> = this.breakpointObserver
     .observe(Breakpoints.Handset)
     .pipe(
@@ -32,7 +32,6 @@ export class HeaderComponent {
     private dialog: MatDialog,
   ) { }
   tokenExpirationDate!: Date | null;
-  role = this.authService.userRole();
 
   get emailUser() {
     return this.authService.emailUser;
@@ -42,21 +41,17 @@ export class HeaderComponent {
     return this.authService.roleUser;
   }
 
-  isAdmin() {
-    const containsAdmin = this.authService.userInfo().subscribe(res => {
-       const perfilsBolean = Object.keys(res.perfils).map(function (key: any) {
-         if (res.perfils[key] == 'ADMIN') {
-           return true
-         }
-         return false;
-       })
-       this.userAdmin = perfilsBolean.includes(true);
-     
-})
-   }
+  get userAdmin() {
+    return this.authService.roleUser === 'Admin';
+  }
+
   ngOnInit(): void {
     this.tokenExpirationDate = this.authService.getTokenExpirationDate();
-    this.isAdmin();
+    if (this.authService.isAuthenticated && !this.authService.roleUser) {
+      this.authService.loadUserRole().pipe(
+        takeUntil(this.destroy$)
+      ).subscribe();
+    }
   }
 
   logout(): void {
@@ -64,8 +59,14 @@ export class HeaderComponent {
       width: '250px',
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-    });
+    dialogRef.afterClosed().pipe(
+      takeUntil(this.destroy$)
+    ).subscribe();
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   itensMenu: MenuItem[] = [

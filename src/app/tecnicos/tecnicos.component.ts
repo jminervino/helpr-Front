@@ -1,5 +1,5 @@
 import { Pessoa } from './../core/models/pessoa';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HotToastService } from '@ngneat/hot-toast';
@@ -16,7 +16,7 @@ import { TecnicoDeleteComponent } from './components/tecnico-delete/tecnico-dele
   templateUrl: './tecnicos.component.html',
   styleUrls: ['./tecnicos.component.scss']
 })
-export class TecnicosComponent implements OnInit {
+export class TecnicosComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = [
     'id',
     'nome',
@@ -37,7 +37,7 @@ export class TecnicosComponent implements OnInit {
   data: any;
 
   currentDialog?: MatDialogRef<any> ;
-  destroy = new Subject<any>();
+  private destroy$ = new Subject<void>();
 
   constructor(
     private tecnicosService: TecnicosService,
@@ -66,10 +66,14 @@ export class TecnicosComponent implements OnInit {
       minWidth: '400px',
       data: cliente,
     });
-    ref.afterClosed().subscribe({
+    ref.afterClosed().pipe(
+      takeUntil(this.destroy$)
+    ).subscribe({
       next: (result) => {
         if (result) {
-          this.tecnicosService.delete(id).subscribe({
+          this.tecnicosService.delete(id).pipe(
+            takeUntil(this.destroy$)
+          ).subscribe({
             next: () => {
               this.tecnicos$ = this.tecnicosService.findAll();
               this.toast.success('Usuário deletado');
@@ -94,6 +98,11 @@ export class TecnicosComponent implements OnInit {
 
   ngOnInit(): void {
     this.tecnicos$ = this.tecnicosService.findAll();
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
 }

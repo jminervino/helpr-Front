@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
-import { EMPTY, Observable } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { Chamado } from 'src/app/core/models/chamado';
 import { Cliente, Tecnico } from 'src/app/core/models/pessoa';
 import { ChamadosService } from 'src/app/core/services/chamados/chamados.service';
@@ -11,7 +11,8 @@ import { ChamadosService } from 'src/app/core/services/chamados/chamados.service
   templateUrl: './chamado-detail.component.html',
   styleUrls: ['./chamado-detail.component.scss'],
 })
-export class ChamadoDetailComponent implements OnInit {
+export class ChamadoDetailComponent implements OnInit, OnDestroy {
+  private destroy$ = new Subject<void>();
   errorMsg = '';
   error = false;
   loading = true;
@@ -26,7 +27,9 @@ export class ChamadoDetailComponent implements OnInit {
 
   ngOnInit(): void {
     const id = this.route.snapshot.params['id'];
-    this.chamadosService.findById(id).subscribe({
+    this.chamadosService.findById(id).pipe(
+      takeUntil(this.destroy$)
+    ).subscribe({
       next: (chamado) => {
         this.chamado = chamado;
         this.loading = false;
@@ -38,6 +41,11 @@ export class ChamadoDetailComponent implements OnInit {
         this.error = true;
         this.loading = false;
       }
-    })
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

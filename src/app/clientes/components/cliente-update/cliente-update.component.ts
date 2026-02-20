@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { UntypedFormBuilder, Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -6,13 +6,15 @@ import { HotToastService } from '@ngneat/hot-toast';
 import { Cliente } from 'src/app/core/models/pessoa';
 import { ClientesService } from 'src/app/core/services/clientes/clientes.service';
 import { profileChecked, someTrue, trueIndexes } from 'src/app/shared/utils';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-cliente-update',
   templateUrl: './cliente-update.component.html',
   styleUrls: ['./cliente-update.component.scss'],
 })
-export class ClienteUpdateComponent implements OnInit {
+export class ClienteUpdateComponent implements OnInit, OnDestroy {
+  private destroy$ = new Subject<void>();
   errorMsg = '';
   error = false;
   loading = true;
@@ -43,7 +45,9 @@ export class ClienteUpdateComponent implements OnInit {
     
     const ref = this.toast.loading('Atualizando cliente');
 
-    this.clientesService.update(cliente).subscribe({
+    this.clientesService.update(cliente).pipe(
+      takeUntil(this.destroy$)
+    ).subscribe({
       next: () => {
         ref.close();
         this.toast.success('Cliente atualizado');
@@ -67,7 +71,9 @@ export class ClienteUpdateComponent implements OnInit {
 
   ngOnInit(): void {
     const id = this.route.snapshot.params['id'];
-    this.clientesService.findById(id).subscribe({
+    this.clientesService.findById(id).pipe(
+      takeUntil(this.destroy$)
+    ).subscribe({
       next: (cliente) => {
         cliente.senha = '';
         const perfils = profileChecked(cliente.perfils as string[]);
@@ -83,5 +89,10 @@ export class ClienteUpdateComponent implements OnInit {
         this.loading = false;
       },
     });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

@@ -33,11 +33,19 @@ export class AuthComponent implements OnInit {
 
     this.authService.login(email, senha).subscribe({
       next: (response) => {
-        ref.close();
         const token = response.headers.get('Authorization');
         this.authService.onLogin(token!.substring(7));
-        this.router.navigate(['/']);
-        this.toast.success('Seja bem-vindo(a)!');
+        this.authService.loadUserRole().subscribe({
+          next: () => {
+            ref.close();
+            this.router.navigate(['/']);
+            this.toast.success('Seja bem-vindo(a)!');
+          },
+          error: () => {
+            ref.close();
+            this.toast.error('Nao foi possivel carregar o perfil do usuario');
+          },
+        });
       },
       error: (err) => {
         window.navigator?.vibrate?.(200);
