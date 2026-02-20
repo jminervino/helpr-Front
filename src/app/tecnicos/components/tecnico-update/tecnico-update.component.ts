@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Validators, UntypedFormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HotToastService } from '@ngneat/hot-toast';
@@ -20,28 +20,28 @@ export class TecnicoUpdateComponent implements OnInit, OnDestroy {
   loading = true;
 
   tecnicoForm = this.fb.group({
-    id: [null],
-    nome: [null, [Validators.required]],
-    cpf: [null, [Validators.required, Validators.maxLength(14)]],
-    email: [null, [Validators.required, Validators.email]],
-    senha: [null],
+    id: [null as number | null],
+    nome: [null as string | null, [Validators.required]],
+    cpf: [null as string | null, [Validators.required, Validators.maxLength(14)]],
+    email: [null as string | null, [Validators.required, Validators.email]],
+    senha: [null as string | null],
     perfils: this.fb.array([[false], [false], [false]], [someTrue]),
   });
 
   constructor(
     private route: ActivatedRoute,
     private tecnicosService: TecnicosService,
-    private fb: UntypedFormBuilder,
+    private fb: FormBuilder,
     private toast: HotToastService,
     private router: Router,
     private titleService: Title
   ) {}
 
   onSubmit() {
-    const tecnico: Tecnico = {
+    const tecnico = {
       ...this.tecnicoForm.value,
-      perfils: trueIndexes(this.tecnicoForm.value.perfils),
-    };
+      perfils: trueIndexes(((this.tecnicoForm.value.perfils ?? []) as (boolean | null)[]).map((value) => !!value)),
+    } as Tecnico;
     
     const ref = this.toast.loading('Atualizando tecnico');
 
@@ -77,7 +77,13 @@ export class TecnicoUpdateComponent implements OnInit, OnDestroy {
       next: (tecnico) => {
         tecnico.senha = '';
         const perfils = profileChecked(tecnico.perfils as string[]);
-        this.tecnicoForm.patchValue(tecnico);
+        this.tecnicoForm.patchValue({
+          id: tecnico.id ?? null,
+          nome: tecnico.nome,
+          cpf: tecnico.cpf,
+          email: tecnico.email,
+          senha: tecnico.senha,
+        });
         this.tecnicoForm.get('perfils')?.setValue(perfils);
         this.loading = false;
         this.titleService.setTitle('Editar técnico');

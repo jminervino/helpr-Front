@@ -3,7 +3,8 @@ import { CommonModule } from '@angular/common';
 
 import { ManualDoSoftwareRoutingModule } from './manual-do-software-routing.module';
 import { ManualDoSoftwareComponent } from './components/manual-do-software/manual-do-software.component';
-import { MaterialModule } from '../shared/material.module';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatListModule } from '@angular/material/list';
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import { MaterialModule } from '../shared/material.module';
   imports: [
     CommonModule,
     ManualDoSoftwareRoutingModule,
-    MaterialModule
+    MatGridListModule,
+    MatListModule
   ]
 })
 export class ManualDoSoftwareModule { }

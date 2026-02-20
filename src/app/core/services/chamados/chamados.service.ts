@@ -4,6 +4,16 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Chamado } from '../../models/chamado';
 
+type ChamadoCreatePayload = Pick<
+  Chamado,
+  'prioridade' | 'status' | 'titulo' | 'observacoes' | 'tecnico' | 'cliente'
+>;
+
+type ChamadoUpdatePayload = Pick<
+  Chamado,
+  'id' | 'prioridade' | 'status' | 'titulo' | 'observacoes' | 'tecnico' | 'cliente'
+>;
+
 @Injectable({
   providedIn: 'root',
 })
@@ -25,11 +35,11 @@ export class ChamadosService {
       }
 
 
-  create(chamado: Chamado) {
+  create(chamado: ChamadoCreatePayload) {
     return this.http.post(this.chamadosUrl, chamado);
   }
 
-  update(chamado: Chamado) {
+  update(chamado: ChamadoUpdatePayload) {
     return this.http.put(`${this.chamadosUrl}/${chamado.id}`, chamado);
   }
 }

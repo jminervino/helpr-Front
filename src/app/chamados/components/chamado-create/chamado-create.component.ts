@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HotToastService } from '@ngneat/hot-toast';
 import { EMPTY, Observable } from 'rxjs';
@@ -18,26 +18,35 @@ export class ChamadoCreateComponent implements OnInit {
   tecnicos$: Observable<Tecnico[]> = EMPTY;
 
   chamadoForm = this.fb.group({
-    prioridade: [null, [Validators.required]],
-    status: [null, [Validators.required]],
-    titulo: [null, [Validators.required]],
-    observacoes: [null, [Validators.required]],
-    tecnico: [null, [Validators.required]],
-    cliente: [null, [Validators.required]],
+    prioridade: [null as number | null, [Validators.required]],
+    status: [null as number | null, [Validators.required]],
+    titulo: [null as string | null, [Validators.required]],
+    observacoes: [null as string | null, [Validators.required]],
+    tecnico: [null as number | null, [Validators.required]],
+    cliente: [null as number | null, [Validators.required]],
   });
 
   constructor(
     private chamadosService: ChamadosService,
     private clientesService: ClientesService,
     private tecnicosService: TecnicosService,
-    private fb: UntypedFormBuilder,
+    private fb: FormBuilder,
     private toast: HotToastService,
     private router: Router
   ) {}
 
   onSubmit() {
+    const chamado = this.chamadoForm.getRawValue() as {
+      prioridade: number;
+      status: number;
+      titulo: string;
+      observacoes: string;
+      tecnico: number;
+      cliente: number;
+    };
+
     const ref = this.toast.loading('Adicionando chamado...');
-    this.chamadosService.create(this.chamadoForm.value).subscribe({
+    this.chamadosService.create(chamado).subscribe({
       next: () => {
         ref.close();
         this.toast.success('Chamado adicionado');

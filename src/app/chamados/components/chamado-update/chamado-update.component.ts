@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { UntypedFormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HotToastService } from '@ngneat/hot-toast';
@@ -23,13 +23,13 @@ export class ChamadoUpdateComponent implements OnInit, OnDestroy {
   loading = true;
 
   chamadoForm = this.fb.group({
-    id: [null],
-    prioridade: [null, [Validators.required]],
-    status: [null, [Validators.required]],
-    titulo: [null, [Validators.required]],
-    observacoes: [null, [Validators.required]],
-    tecnico: [null, [Validators.required]],
-    cliente: [null, [Validators.required]],
+    id: [null as number | null],
+    prioridade: [null as number | null, [Validators.required]],
+    status: [null as number | null, [Validators.required]],
+    titulo: [null as string | null, [Validators.required]],
+    observacoes: [null as string | null, [Validators.required]],
+    tecnico: [null as number | null, [Validators.required]],
+    cliente: [null as number | null, [Validators.required]],
   });
 
   constructor(
@@ -39,13 +39,23 @@ export class ChamadoUpdateComponent implements OnInit, OnDestroy {
     private toast: HotToastService,
     private router: Router,
     private route: ActivatedRoute,
-    private fb: UntypedFormBuilder,
+    private fb: FormBuilder,
     private titleService: Title
   ) {}
 
   onSubmit() {
+    const chamado = this.chamadoForm.getRawValue() as {
+      id: number;
+      prioridade: number;
+      status: number;
+      titulo: string;
+      observacoes: string;
+      tecnico: number;
+      cliente: number;
+    };
+
     const ref = this.toast.loading('Atualizando chamado...');
-    this.chamadosService.update(this.chamadoForm.value).pipe(
+    this.chamadosService.update(chamado).pipe(
       takeUntil(this.destroy$)
     ).subscribe({
       next: () => {
@@ -76,7 +86,7 @@ export class ChamadoUpdateComponent implements OnInit, OnDestroy {
     }));
 
      this.tecnicos$ = this.tecnicosService.findAll().pipe(delay(500), tap(() =>{
-      this.resultadoCliente = true;
+      this.resultadoTecnico = true;
     }));
 
     const id = this.route.snapshot.params['id'];
@@ -84,7 +94,15 @@ export class ChamadoUpdateComponent implements OnInit, OnDestroy {
       takeUntil(this.destroy$)
     ).subscribe({
       next: (chamado) => {
-        this.chamadoForm.patchValue(chamado);
+        this.chamadoForm.patchValue({
+          id: chamado.id,
+          prioridade: chamado.prioridade,
+          status: chamado.status,
+          titulo: chamado.titulo,
+          observacoes: chamado.observacoes,
+          tecnico: chamado.tecnico,
+          cliente: chamado.cliente,
+        });
         this.loading = false;
         this.titleService.setTitle('Editar chamado');
       },

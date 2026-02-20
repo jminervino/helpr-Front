@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HotToastService } from '@ngneat/hot-toast';
 import { Cliente } from 'src/app/core/models/pessoa';
@@ -13,25 +13,25 @@ import { someTrue, trueIndexes } from 'src/app/shared/utils';
 })
 export class ClienteCreateComponent implements OnInit {
   clienteForm = this.fb.group({
-    nome: [null, [Validators.required]],
-    cpf: [null, [Validators.required, Validators.maxLength(14)]],
-    email: [null, [Validators.required, Validators.email]],
-    senha: [null, [Validators.required]],
+    nome: [null as string | null, [Validators.required]],
+    cpf: [null as string | null, [Validators.required, Validators.maxLength(14)]],
+    email: [null as string | null, [Validators.required, Validators.email]],
+    senha: [null as string | null, [Validators.required]],
     perfils: this.fb.array([[false], [true], [false]], [someTrue]),
   });
 
   constructor(
-    private fb: UntypedFormBuilder,
+    private fb: FormBuilder,
     private clientesService: ClientesService,
     private toast: HotToastService,
     private router: Router
   ) {}
 
   onSubmit() {
-    const cliente: Cliente = {
+    const cliente = {
       ...this.clienteForm.value,
-      perfils: trueIndexes(this.clienteForm.value.perfils),
-    };
+      perfils: trueIndexes(((this.clienteForm.value.perfils ?? []) as (boolean | null)[]).map((value) => !!value)),
+    } as Cliente;
 
     const ref = this.toast.loading('Adicionando cliente');
 

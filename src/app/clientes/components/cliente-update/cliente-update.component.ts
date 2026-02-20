@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { UntypedFormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HotToastService } from '@ngneat/hot-toast';
@@ -20,28 +20,28 @@ export class ClienteUpdateComponent implements OnInit, OnDestroy {
   loading = true;
 
   clienteForm = this.fb.group({
-    id: [null],
-    nome: [null, [Validators.required]],
-    cpf: [null, [Validators.required, Validators.maxLength(14)]],
-    email: [null, [Validators.required, Validators.email]],
-    senha: [null],
+    id: [null as number | null],
+    nome: [null as string | null, [Validators.required]],
+    cpf: [null as string | null, [Validators.required, Validators.maxLength(14)]],
+    email: [null as string | null, [Validators.required, Validators.email]],
+    senha: [null as string | null],
     perfils: this.fb.array([[false], [false], [false]], [someTrue]),
   });
 
   constructor(
     private route: ActivatedRoute,
     private clientesService: ClientesService,
-    private fb: UntypedFormBuilder,
+    private fb: FormBuilder,
     private toast: HotToastService,
     private router: Router,
     private titleService: Title
   ) {}
 
   onSubmit() {
-    const cliente: Cliente = {
+    const cliente = {
       ...this.clienteForm.value,
-      perfils: trueIndexes(this.clienteForm.value.perfils),
-    };
+      perfils: trueIndexes(((this.clienteForm.value.perfils ?? []) as (boolean | null)[]).map((value) => !!value)),
+    } as Cliente;
     
     const ref = this.toast.loading('Atualizando cliente');
 
@@ -77,7 +77,13 @@ export class ClienteUpdateComponent implements OnInit, OnDestroy {
       next: (cliente) => {
         cliente.senha = '';
         const perfils = profileChecked(cliente.perfils as string[]);
-        this.clienteForm.patchValue(cliente);
+        this.clienteForm.patchValue({
+          id: cliente.id ?? null,
+          nome: cliente.nome,
+          cpf: cliente.cpf,
+          email: cliente.email,
+          senha: cliente.senha,
+        });
         this.clienteForm.get('perfils')?.setValue(perfils);
         this.loading = false;
         this.titleService.setTitle('Editar cliente');

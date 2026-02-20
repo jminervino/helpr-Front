@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { HotToastService } from '@ngneat/hot-toast';
-import { EMPTY, Observable, Subject, takeUntil } from 'rxjs';
+import { EMPTY, filter, Observable, Subject, switchMap, takeUntil } from 'rxjs';
 import { Cliente } from '../core/models/pessoa';
 import { ClientesService } from '../core/services/clientes/clientes.service';
 import { ClienteAbertoComponent } from './components/cliente-aberto/cliente-aberto.component';
@@ -42,30 +42,22 @@ export class ClientesComponent implements OnInit, OnDestroy {
       data: cliente,
     });
     ref.afterClosed().pipe(
+      filter((result) => !!result),
+      switchMap(() => this.clientesService.delete(id)),
       takeUntil(this.destroy$)
     ).subscribe({
-      next: (result) => {
-        if (result) {
-          this.clientesService.delete(id).pipe(
-            takeUntil(this.destroy$)
-          ).subscribe({
-            next: () => {
-              this.clientes$ = this.clientesService.findAll();
-              this.toast.success('Usuário deletado');
-              ref.close();
-            },
-            error: (err) => {
-              ref.close();
-              switch (err.status) {
-                case 403:
-                  return this.toast.error('Usuário não tem permissão');
-                case 409:
-                  return this.toast.error(err.error.message);
-                default:
-                  return this.toast.error('Um erro aconteceu');
-              }
-            },
-          });
+      next: () => {
+        this.clientes$ = this.clientesService.findAll();
+        this.toast.success('Usuário deletado');
+      },
+      error: (err) => {
+        switch (err.status) {
+          case 403:
+            return this.toast.error('Usuário não tem permissão');
+          case 409:
+            return this.toast.error(err.error.message);
+          default:
+            return this.toast.error('Um erro aconteceu');
         }
       },
     });

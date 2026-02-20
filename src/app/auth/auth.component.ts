@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { HotToastService } from '@ngneat/hot-toast';
@@ -12,14 +12,14 @@ import { AuthService } from '../core/services/auth/auth.service';
 })
 export class AuthComponent implements OnInit {
   constructor(
-    private fb: UntypedFormBuilder,
+    private fb: FormBuilder,
     private authService: AuthService,
     private router: Router,
     private toast: HotToastService,
     private titleService: Title
   ) {}
 
-  loginForm = this.fb.group({
+  loginForm = this.fb.nonNullable.group({
     email: ['', [Validators.required, Validators.email]],
     senha: ['', [Validators.required]],
   });
@@ -27,7 +27,7 @@ export class AuthComponent implements OnInit {
   ocultar = true;
 
   onSubmit() {
-    const { email, senha } = this.loginForm.value;
+    const { email, senha } = this.loginForm.getRawValue();
 
     const ref = this.toast.loading('Fazendo login...');
 
