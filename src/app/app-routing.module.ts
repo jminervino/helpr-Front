@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthLogadoGuard } from './auth/guards/auth-logado/auth-logado.guard';
-import { AuthGuard } from './auth/guards/auth/auth.guard';
-import { RoleGuardGuard } from './auth/guards/roleGuard/role-guard.guard';
 import { HeaderComponent } from './core/components/header/header.component';
 import { NotFoundComponent } from './core/components/not-found/not-found.component';
+import { AuthGuard } from './core/guards/auth.guard';
+import { AuthLogadoGuard } from './core/guards/logged-in.guard';
+import { RoleGuardGuard } from './core/guards/role.guard';
 
 const routes: Routes = [
   {
