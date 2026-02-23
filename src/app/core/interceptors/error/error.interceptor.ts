@@ -21,7 +21,14 @@ export class ErrorInterceptor implements HttpInterceptor {
       catchError((error: HttpErrorResponse) => {
         switch (error.status) {
           case 403:
-            this.toast.error('Acao nao permitida');
+            if (req.method === 'POST' && req.url.includes('/service/clientes')) {
+              this.toast.error('Apenas tecnicos ou administradores podem criar clientes.');
+            } else {
+              this.toast.error('Acao nao permitida');
+            }
+            break;
+          case 404:
+            // Silencioso — recursos não encontrados são tratados por cada serviço
             break;
           case 409:
             this.toast.error(error.error?.message || 'Conflito de dados');

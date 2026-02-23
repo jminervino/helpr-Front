@@ -4,6 +4,19 @@ import { Observable } from 'rxjs';
 import { Cliente } from '../../models/pessoa';
 import { environment } from 'src/environments/environment';
 
+/** Backend espera perfils como number[] (ADMIN=0, CLIENTE=1, TECNICO=2). */
+export interface ClienteCreatePayload {
+  nome: string;
+  cpf: string;
+  email: string;
+  senha: string;
+  perfils: number[];
+}
+
+export interface ClienteUpdatePayload extends ClienteCreatePayload {
+  id: number;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -20,12 +33,12 @@ export class ClientesService {
     return this.http.get<Cliente>(`${this.clientesUrl}/${id}`);
   }
 
-  create(cliente: Cliente) {
-    return this.http.post(this.clientesUrl, cliente);
+  create(payload: ClienteCreatePayload) {
+    return this.http.post<Cliente>(this.clientesUrl, payload);
   }
 
-  update(cliente: Cliente) {
-    return this.http.put(`${this.clientesUrl}/${cliente.id}`, cliente);
+  update(payload: ClienteUpdatePayload) {
+    return this.http.put(`${this.clientesUrl}/${payload.id}`, payload);
   }
 
   delete(id: number) {

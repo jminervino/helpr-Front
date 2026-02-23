@@ -1,11 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { Tecnico } from 'src/app/core/models/pessoa';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HotToastService } from '@ngneat/hot-toast';
-import { Tecnico } from 'src/app/core/models/pessoa';
 import { TecnicosService } from 'src/app/core/services/tecnicos/tecnicos.service';
-import { someTrue, selectedPerfils, profileChecked } from 'src/app/shared/utils';
+import { someTrue, perfilsToBackend, profileChecked, profileCheckedFromNumbers } from 'src/app/shared/utils';
 import { Subject, takeUntil } from 'rxjs';
 
 @Component({
@@ -38,14 +38,20 @@ export class TecnicoUpdateComponent implements OnInit, OnDestroy {
   ) {}
 
   onSubmit() {
-    const tecnico = {
-      ...this.tecnicoForm.value,
-      perfils: selectedPerfils(((this.tecnicoForm.value.perfils ?? []) as (boolean | null)[]).map((value) => !!value)),
-    } as Tecnico;
-    
+    const { id, nome, cpf, email, senha } = this.tecnicoForm.getRawValue();
+    const checked = ((this.tecnicoForm.value.perfils ?? []) as (boolean | null)[]).map((v) => !!v);
+    const payload = {
+      id: id!,
+      nome: nome ?? '',
+      cpf: cpf ?? '',
+      email: email ?? '',
+      senha: senha ?? '',
+      perfils: perfilsToBackend(checked),
+    };
+
     const ref = this.toast.loading('Atualizando tecnico');
 
-    this.tecnicosService.update(tecnico).pipe(
+    this.tecnicosService.update(payload).pipe(
       takeUntil(this.destroy$)
     ).subscribe({
       next: () => {
@@ -66,7 +72,10 @@ export class TecnicoUpdateComponent implements OnInit, OnDestroy {
     ).subscribe({
       next: (tecnico) => {
         tecnico.senha = '';
-        const perfils = profileChecked(tecnico.perfils as string[]);
+        const raw = tecnico.perfils ?? [];
+        const perfils = Array.isArray(raw) && raw.length > 0 && typeof raw[0] === 'number'
+          ? profileCheckedFromNumbers(raw as unknown as number[])
+          : profileChecked(raw as string[]);
         this.tecnicoForm.patchValue({
           id: tecnico.id ?? null,
           nome: tecnico.nome,

@@ -3,7 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { HotToastService } from '@ngneat/hot-toast';
-import { switchMap, tap } from 'rxjs';
+import { tap } from 'rxjs';
 import { AuthService } from '../core/services/auth/auth.service';
 
 @Component({
@@ -36,13 +36,14 @@ export class AuthComponent implements OnInit {
       tap((response) => {
         const token = response.headers.get('Authorization');
         this.authService.onLogin(token!.substring(7));
-      }),
-      switchMap(() => this.authService.loadUserRole())
+      })
     ).subscribe({
       next: () => {
         ref.close();
         this.router.navigate(['/']);
         this.toast.success('Seja bem-vindo(a)!');
+        // Carrega o role em background — não bloqueia a navegação
+        this.authService.loadUserRole().subscribe();
       },
       error: () => {
         window.navigator?.vibrate?.(200);

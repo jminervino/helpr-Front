@@ -4,15 +4,19 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Chamado } from '../../models/chamado';
 
-type ChamadoCreatePayload = Pick<
-  Chamado,
-  'prioridade' | 'status' | 'titulo' | 'observacoes' | 'tecnico' | 'cliente'
->;
+/** Backend espera prioridade/status como Integer (ordinal do enum Java). */
+interface ChamadoCreatePayload {
+  prioridade: number;
+  status: number;
+  titulo: string;
+  observacoes: string;
+  tecnico: number;
+  cliente: number;
+}
 
-type ChamadoUpdatePayload = Pick<
-  Chamado,
-  'id' | 'prioridade' | 'status' | 'titulo' | 'observacoes' | 'tecnico' | 'cliente'
->;
+interface ChamadoUpdatePayload extends ChamadoCreatePayload {
+  id: number;
+}
 
 @Injectable({
   providedIn: 'root',

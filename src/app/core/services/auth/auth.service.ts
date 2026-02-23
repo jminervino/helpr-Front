@@ -2,7 +2,7 @@ import { PessoasService } from './../pessoas/pessoas.service';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { BehaviorSubject, map, Observable, retry, tap } from 'rxjs';
+import { BehaviorSubject, catchError, map, Observable, of, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -29,10 +29,7 @@ export class AuthService {
 
   userInfo() {
     this.setEmailFromToken();
-
-    return this.pessoasService.findByEmail(this.emailUser!).pipe(
-      retry({ count: 2, delay: 1000 })
-    );
+    return this.pessoasService.findByEmail(this.emailUser!);
   }
 
   userRole(): string | null {
@@ -40,10 +37,37 @@ export class AuthService {
   }
 
   loadUserRole(): Observable<string | null> {
+    // Se o JWT já tem as claims de role, usa direto — sem requisição HTTP
+    const jwtRole = this.resolveRoleFromToken();
+    if (jwtRole) {
+      this.roleSubject.next(jwtRole);
+      return of(jwtRole);
+    }
+
+    // Fallback: busca na API quando o JWT não traz 'authorities'
     return this.userInfo().pipe(
       map((pessoa) => this.resolveRole((pessoa.perfils ?? []) as string[])),
-      tap((role) => this.roleSubject.next(role))
+      tap((role) => this.roleSubject.next(role)),
+      catchError(() => of(null))
     );
+  }
+
+  /** Extrai o role das claims do JWT (Spring Boot armazena em 'authorities'). */
+  private resolveRoleFromToken(): string | null {
+    const token = localStorage.getItem('token');
+    if (!token) return null;
+    try {
+      const decoded = this.jwt.decodeToken(token);
+      const raw = decoded.authorities;
+      if (!raw) return null;
+      const auth = Array.isArray(raw) ? raw.join(',') : String(raw);
+      if (auth.includes('ADMIN')) return 'Admin';
+      if (auth.includes('TECNICO')) return 'Tecnico';
+      if (auth.includes('CLIENTE')) return 'Cliente';
+    } catch {
+      return null;
+    }
+    return null;
   }
 
   private resolveRole(perfils: string[]): string {

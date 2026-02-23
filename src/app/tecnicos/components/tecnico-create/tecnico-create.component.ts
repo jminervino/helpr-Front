@@ -2,9 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HotToastService } from '@ngneat/hot-toast';
-import { Tecnico } from 'src/app/core/models/pessoa';
 import { TecnicosService } from 'src/app/core/services/tecnicos/tecnicos.service';
-import { someTrue, selectedPerfils } from 'src/app/shared/utils';
+import { someTrue, perfilsToBackend } from 'src/app/shared/utils';
 
 @Component({
   selector: 'app-tecnico-create',
@@ -28,14 +27,19 @@ export class TecnicoCreateComponent implements OnInit {
   ) {}
 
   onSubmit() {
-    const tecnico = {
-      ...this.tecnicoForm.value,
-      perfils: selectedPerfils(((this.tecnicoForm.value.perfils ?? []) as (boolean | null)[]).map((value) => !!value)),
-    } as Tecnico;
+    const { nome, cpf, email, senha } = this.tecnicoForm.getRawValue();
+    const checked = ((this.tecnicoForm.value.perfils ?? []) as (boolean | null)[]).map((v) => !!v);
+    const payload = {
+      nome: nome ?? '',
+      cpf: cpf ?? '',
+      email: email ?? '',
+      senha: senha ?? '',
+      perfils: perfilsToBackend(checked),
+    };
 
     const ref = this.toast.loading('Adicionando tecnico');
 
-    this.tecnicosService.create(tecnico).subscribe({
+    this.tecnicosService.create(payload).subscribe({
       next: () => {
         ref.close();
         this.toast.success('Tecnico criado');

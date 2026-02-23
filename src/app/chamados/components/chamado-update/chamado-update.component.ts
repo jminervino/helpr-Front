@@ -4,11 +4,11 @@ import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HotToastService } from '@ngneat/hot-toast';
 import { delay, EMPTY, Observable, Subject, takeUntil, tap } from 'rxjs';
-import { Prioridade, Status } from 'src/app/core/models/chamado';
 import { Cliente, Tecnico } from 'src/app/core/models/pessoa';
 import { ChamadosService } from 'src/app/core/services/chamados/chamados.service';
 import { ClientesService } from 'src/app/core/services/clientes/clientes.service';
 import { TecnicosService } from 'src/app/core/services/tecnicos/tecnicos.service';
+import { prioridadeFromBackend, prioridadeToBackend, statusFromBackend, statusToBackend } from 'src/app/shared/utils';
 
 @Component({
   selector: 'app-chamado-update',
@@ -45,14 +45,15 @@ export class ChamadoUpdateComponent implements OnInit, OnDestroy {
   ) {}
 
   onSubmit() {
-    const chamado = this.chamadoForm.getRawValue() as {
-      id: number;
-      prioridade: Prioridade;
-      status: Status;
-      titulo: string;
-      observacoes: string;
-      tecnico: number;
-      cliente: number;
+    const raw = this.chamadoForm.getRawValue();
+    const chamado = {
+      id: raw.id!,
+      prioridade: prioridadeToBackend(raw.prioridade!),
+      status: statusToBackend(raw.status!),
+      titulo: raw.titulo!,
+      observacoes: raw.observacoes!,
+      tecnico: raw.tecnico!,
+      cliente: raw.cliente!,
     };
 
     const ref = this.toast.loading('Atualizando chamado...');
@@ -89,8 +90,8 @@ export class ChamadoUpdateComponent implements OnInit, OnDestroy {
       next: (chamado) => {
         this.chamadoForm.patchValue({
           id: chamado.id,
-          prioridade: chamado.prioridade,
-          status: chamado.status,
+          prioridade: prioridadeFromBackend(chamado.prioridade as any),
+          status: statusFromBackend(chamado.status as any),
           titulo: chamado.titulo,
           observacoes: chamado.observacoes,
           tecnico: chamado.tecnico,

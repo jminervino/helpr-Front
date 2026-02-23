@@ -3,9 +3,8 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HotToastService } from '@ngneat/hot-toast';
-import { Cliente } from 'src/app/core/models/pessoa';
 import { ClientesService } from 'src/app/core/services/clientes/clientes.service';
-import { profileChecked, someTrue, selectedPerfils } from 'src/app/shared/utils';
+import { profileChecked, profileCheckedFromNumbers, someTrue, perfilsToBackend } from 'src/app/shared/utils';
 import { Subject, takeUntil } from 'rxjs';
 
 @Component({
@@ -38,14 +37,20 @@ export class ClienteUpdateComponent implements OnInit, OnDestroy {
   ) {}
 
   onSubmit() {
-    const cliente = {
-      ...this.clienteForm.value,
-      perfils: selectedPerfils(((this.clienteForm.value.perfils ?? []) as (boolean | null)[]).map((value) => !!value)),
-    } as Cliente;
-    
+    const { id, nome, cpf, email, senha } = this.clienteForm.getRawValue();
+    const checked = ((this.clienteForm.value.perfils ?? []) as (boolean | null)[]).map((v) => !!v);
+    const payload = {
+      id: id!,
+      nome: nome ?? '',
+      cpf: cpf ?? '',
+      email: email ?? '',
+      senha: senha ?? '',
+      perfils: perfilsToBackend(checked),
+    };
+
     const ref = this.toast.loading('Atualizando cliente');
 
-    this.clientesService.update(cliente).pipe(
+    this.clientesService.update(payload).pipe(
       takeUntil(this.destroy$)
     ).subscribe({
       next: () => {
@@ -66,7 +71,10 @@ export class ClienteUpdateComponent implements OnInit, OnDestroy {
     ).subscribe({
       next: (cliente) => {
         cliente.senha = '';
-        const perfils = profileChecked(cliente.perfils as string[]);
+        const raw = cliente.perfils ?? [];
+        const perfils = Array.isArray(raw) && raw.length > 0 && typeof raw[0] === 'number'
+          ? profileCheckedFromNumbers(raw as unknown as number[])
+          : profileChecked(raw as string[]);
         this.clienteForm.patchValue({
           id: cliente.id ?? null,
           nome: cliente.nome,

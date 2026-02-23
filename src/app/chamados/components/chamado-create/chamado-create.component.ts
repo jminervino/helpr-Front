@@ -3,11 +3,11 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HotToastService } from '@ngneat/hot-toast';
 import { EMPTY, Observable } from 'rxjs';
-import { Prioridade, Status } from 'src/app/core/models/chamado';
 import { Cliente, Tecnico } from 'src/app/core/models/pessoa';
 import { ChamadosService } from 'src/app/core/services/chamados/chamados.service';
 import { ClientesService } from 'src/app/core/services/clientes/clientes.service';
 import { TecnicosService } from 'src/app/core/services/tecnicos/tecnicos.service';
+import { prioridadeToBackend, statusToBackend } from 'src/app/shared/utils';
 
 @Component({
   selector: 'app-chamado-create',
@@ -37,13 +37,14 @@ export class ChamadoCreateComponent implements OnInit {
   ) {}
 
   onSubmit() {
-    const chamado = this.chamadoForm.getRawValue() as {
-      prioridade: Prioridade;
-      status: Status;
-      titulo: string;
-      observacoes: string;
-      tecnico: number;
-      cliente: number;
+    const raw = this.chamadoForm.getRawValue();
+    const chamado = {
+      prioridade: prioridadeToBackend(raw.prioridade!),
+      status: statusToBackend(raw.status!),
+      titulo: raw.titulo!,
+      observacoes: raw.observacoes!,
+      tecnico: raw.tecnico!,
+      cliente: raw.cliente!,
     };
 
     const ref = this.toast.loading('Adicionando chamado...');

@@ -4,8 +4,9 @@ export interface Pessoa {
   cpf: string;
   email: string;
   senha: string;
-  // Campo da API: "perfils" (mantido por compatibilidade com backend)
-  perfils: Perfil[] | string[];
+  // Campo da API: "perfils" (somente em respostas do backend)
+  // Para requisições de criação/atualização, use tipos específicos de payload.
+  perfils?: (Perfil | string)[];
   dataCriacao?: string;
 }
 
