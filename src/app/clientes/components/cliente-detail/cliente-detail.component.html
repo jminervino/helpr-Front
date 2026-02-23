@@ -1,23 +1,19 @@
 <mat-card
-  class="example-card"
+  class="detail-card"
   *ngIf="cliente$ | async as pessoa; else loadingOrError"
 >
   <mat-card-header>
     <div mat-card-avatar><mat-icon>account_circle</mat-icon></div>
-    <mat-card-title>{{ pessoa.nome }} </mat-card-title>
+    <mat-card-title>{{ pessoa.nome }}</mat-card-title>
     <mat-card-subtitle>{{ pessoa.email }}</mat-card-subtitle>
   </mat-card-header>
-  <img
-    mat-card-image
-    src="https://cdn.diferenca.com/imagens/grafico-pizza-cke.jpg"
-    alt="Photo of a Shiba Inu"
-  />
   <mat-card-content>
-    <p style="font-weight: bold;">Gráfico do Cliente </p>
+    <p><strong>Criado em:</strong> {{ pessoa.dataCriacao }}</p>
+    <p><strong>CPF:</strong> {{ pessoa.cpf }}</p>
   </mat-card-content>
   <mat-card-actions>
-    <button mat-button>Criado em: {{ pessoa.dataCriacao }}</button>
-    <button mat-button>CPF {{ pessoa.cpf }}</button>
+    <button mat-stroked-button routerLink="/clientes">Voltar</button>
+    <button mat-flat-button color="primary" routerLink="edit/{{ pessoa.id }}">Editar</button>
   </mat-card-actions>
 </mat-card>
 

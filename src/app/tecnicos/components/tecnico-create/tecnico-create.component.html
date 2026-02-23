@@ -1,7 +1,7 @@
-<div class="container">
-  <div class="form-wrapper">
+<div class="page-container--narrow">
+  <div class="form-card">
+    <h2 class="form-card__title">Novo técnico</h2>
     <form [formGroup]="tecnicoForm" (ngSubmit)="onSubmit()">
-      <h2>Novo tecnico</h2>
       <section formArrayName="perfils" class="section checkbox-section">
         <mat-checkbox class="margin" color="primary" formControlName="0">Admin</mat-checkbox>
         <mat-checkbox class="margin" color="primary" formControlName="1">Cliente</mat-checkbox>
@@ -34,39 +34,13 @@
         <mat-error *ngIf="tecnicoForm.get('senha')?.errors?.['minlength']">O mínimo são 8 caracteres</mat-error>
         <mat-icon matPrefix>key</mat-icon>
       </mat-form-field>
-      <span class="mat-error" *ngIf="tecnicoForm.get('perfils')?.errors?.['sometrue']">
-        Marque pelo menos uma função para o user
-      </span>
-      <button mat-raised-button color="primary" [disabled]="tecnicoForm.invalid">
-        Criar
-      </button>
-    </form>
-  </div>
-</div>
-
-<div id="carouselExampleIndicators" class="carousel slide mt-5" data-bs-ride="carousel">
-  <div class="carousel-indicators">
-    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
-  </div>
-  <div class="carousel-inner">
-    <div class="carousel-item active">
-      <img src="https://user-images.githubusercontent.com/31005408/175540233-f385fa20-1cf9-44c1-86e5-161c9fdc0a9f.png" class="d-block w-100" alt="...">
+    <span class="mat-error" *ngIf="tecnicoForm.get('perfils')?.errors?.['sometrue']">
+      Marque pelo menos uma função para o usuário
+    </span>
+    <div class="form-card__actions">
+      <button mat-button type="button" routerLink="/tecnicos">Cancelar</button>
+      <button mat-flat-button color="primary" [disabled]="tecnicoForm.invalid">Criar técnico</button>
     </div>
-    <div class="carousel-item">
-      <img src="https://user-images.githubusercontent.com/31005408/175540237-dd9c8a51-20bb-4268-b707-8541b1bdf48f.png" class="d-block w-100" alt="...">
-    </div>
-    <div class="carousel-item">
-      <img src="https://user-images.githubusercontent.com/31005408/175540247-74ab6d49-060b-4175-8aa5-3c8193cf412b.png" class="d-block w-100" alt="...">
-    </div>
+  </form>
   </div>
-  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Previous</span>
-  </button>
-  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Next</span>
-  </button>
 </div>

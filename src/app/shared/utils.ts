@@ -1,28 +1,21 @@
 import { AbstractControl, ValidationErrors } from '@angular/forms';
+import { Perfil } from '../core/models/pessoa';
 
-export function trueIndexes(array: boolean[]): number[] {
-  return array.map((bool, i) => (bool ? i : -1)).filter((num) => num >= 0);
+const PERFIL_ORDER: Perfil[] = [Perfil.ADMIN, Perfil.CLIENTE, Perfil.TECNICO];
+
+export function selectedPerfils(array: boolean[]): Perfil[] {
+  return array
+    .map((checked, i) => (checked ? PERFIL_ORDER[i] : null))
+    .filter((p): p is Perfil => p !== null);
 }
 export function profileChecked(array: string[]): boolean[] {
-  /*
-  const perfis = [false, false, true];
-  const labels = ['ADMIN', 'CLIENTE', 'TECNICO',];
-
-  perfis.forEach((_, i) => {
-    perfis[i] = array.includes(labels[i]);
-  });
-
-  return perfis;
-  */
   return [
     array.includes('ADMIN'),
     array.includes('CLIENTE'),
     array.includes('TECNICO'),
   ];
-  // Object.keys(Perfil).map((perfil) => array.includes(perfil));
 }
 
-// 0 = ADMIN, 1 = CLIENTE, 2 = TECNICO ===> [false, false, false]
 export function someTrue(control: AbstractControl): ValidationErrors | null {
   return !control.value.some((v: boolean) => v) ? { sometrue: true } : null;
 }

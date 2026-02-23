@@ -1,4 +1,4 @@
-<div class="loader-wrapper">
-    <mat-spinner color="accent"></mat-spinner>
-    <h3 *ngIf="label">{{label}}</h3>
+<div class="loader-wrapper" [class.loader-wrapper--page]="size === 'page'" [class.loader-wrapper--inline]="size === 'inline'" [class.loader-wrapper--button]="size === 'button'">
+  <mat-spinner [diameter]="spinnerDiameter" color="accent"></mat-spinner>
+  <h3 *ngIf="label && size === 'page'">{{ label }}</h3>
 </div>

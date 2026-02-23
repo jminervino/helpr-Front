@@ -1,0 +1,27 @@
+// ============================================================
+// Page container (used inside HeaderComponent content-area)
+// Variants: default, narrow (forms), wide (tables), full (edge-to-edge)
+// ============================================================
+
+.page-container {
+  max-width: var(--page-max-width);
+  margin: 0 auto;
+  padding: var(--page-padding-y) var(--page-padding-x);
+  width: 100%;
+  flex: 1;
+  box-sizing: border-box;
+}
+
+.page-container--narrow {
+  max-width: var(--page-max-width-narrow);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.page-container--wide {
+  max-width: var(--page-max-width-wide);
+}
+
+.page-container--full {
+  max-width: none;
+}

@@ -1,0 +1,121 @@
+<!-- Hero Section -->
+<section class="hero">
+  <div class="hero__bg"></div>
+  <div class="hero__content">
+    <div class="hero__badge">
+      <mat-icon>rocket_launch</mat-icon>
+      <span>Plataforma de Helpdesk</span>
+    </div>
+    <h1 class="hero__title">
+      Gerencie seus chamados<br />
+      com <span class="hero__highlight">simplicidade</span>
+    </h1>
+    <p class="hero__subtitle">
+      Helpr e uma plataforma completa de gestao de chamados, clientes e tecnicos.
+      Construida com Angular, Material Design e as melhores praticas de desenvolvimento.
+    </p>
+    <div class="hero__actions">
+      <a mat-flat-button color="primary" routerLink="/auth" class="hero__btn hero__btn--primary">
+        <mat-icon>login</mat-icon>
+        Acessar Plataforma
+      </a>
+      <a mat-stroked-button class="hero__btn hero__btn--outline" href="#features">
+        <mat-icon>arrow_downward</mat-icon>
+        Conhecer Recursos
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Stats Bar -->
+<section class="stats-bar">
+  <div class="stats-bar__inner">
+    <div class="stats-bar__item" *ngFor="let stat of stats">
+      <span class="stats-bar__value">{{ stat.value }}</span>
+      <span class="stats-bar__label">{{ stat.label }}</span>
+    </div>
+  </div>
+</section>
+
+<!-- Features Section -->
+<section class="features" id="features">
+  <div class="section-container">
+    <div class="section-header">
+      <span class="section-tag">Recursos</span>
+      <h2 class="section-title">Tudo que voce precisa em um so lugar</h2>
+      <p class="section-subtitle">
+        Uma plataforma completa para gerenciamento de chamados de suporte tecnico.
+      </p>
+    </div>
+    <div class="features__grid">
+      <div class="feature-card" *ngFor="let feature of features">
+        <div class="feature-card__icon">
+          <mat-icon>{{ feature.icon }}</mat-icon>
+        </div>
+        <h3 class="feature-card__title">{{ feature.title }}</h3>
+        <p class="feature-card__desc">{{ feature.description }}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- How it Works -->
+<section class="how-it-works">
+  <div class="section-container">
+    <div class="section-header">
+      <span class="section-tag">Como funciona</span>
+      <h2 class="section-title">Simples em 3 passos</h2>
+    </div>
+    <div class="steps">
+      <div class="step" *ngFor="let step of steps">
+        <div class="step__number">{{ step.number }}</div>
+        <div class="step__icon">
+          <mat-icon>{{ step.icon }}</mat-icon>
+        </div>
+        <h3 class="step__title">{{ step.title }}</h3>
+        <p class="step__desc">{{ step.description }}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Tech Stack -->
+<section class="tech-stack">
+  <div class="section-container">
+    <div class="section-header">
+      <span class="section-tag">Tecnologias</span>
+      <h2 class="section-title">Stack Moderna</h2>
+      <p class="section-subtitle">
+        Desenvolvido com as tecnologias mais utilizadas no mercado.
+      </p>
+    </div>
+    <div class="tech-stack__grid">
+      <div class="tech-chip" *ngFor="let tech of techStack">
+        {{ tech }}
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta">
+  <div class="cta__content">
+    <h2 class="cta__title">Pronto para comecar?</h2>
+    <p class="cta__subtitle">Acesse a plataforma e experimente todos os recursos.</p>
+    <a mat-flat-button routerLink="/auth" class="cta__btn">
+      <mat-icon>login</mat-icon>
+      Acessar Agora
+    </a>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="landing-footer">
+  <div class="landing-footer__inner">
+    <div class="landing-footer__brand">
+      <img src="assets/img/logo.png" alt="Helpr" class="landing-footer__logo" />
+      <span class="landing-footer__name">Helpr</span>
+    </div>
+    <p class="landing-footer__copy">&copy; 2024 Helpr - Projeto de portfolio</p>
+  </div>
+</footer>

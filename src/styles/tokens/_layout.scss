@@ -1,0 +1,10 @@
+// ============================================================
+// Design System - Layout (sidebar, topbar, breakpoints)
+// Breakpoints: Desktop >1280px (side), Tablet 960-1279px (future: icon-only), Mobile <960px (over)
+// ============================================================
+
+:root {
+  --sidebar-width-expanded: 240px;   // Was 200px
+  --sidebar-width-collapsed: 64px;   // Icon-only mode (for future tablet)
+  --topbar-height: 64px;
+}

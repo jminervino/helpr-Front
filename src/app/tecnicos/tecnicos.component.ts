@@ -1,15 +1,11 @@
-import { Pessoa } from './../core/models/pessoa';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { ActivatedRoute, Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
 import { HotToastService } from '@ngneat/hot-toast';
 import { EMPTY, filter, Observable, Subject, switchMap, takeUntil } from 'rxjs';
 import { Tecnico } from '../core/models/pessoa';
 import { TecnicosService } from '../core/services/tecnicos/tecnicos.service';
 import { TecnicoDetailComponent } from './components/tecnico-detail/tecnico-detail.component';
 import { ConfirmDialogComponent } from '../shared/components/confirm-dialog/confirm-dialog.component';
-
-
 
 @Component({
   selector: 'app-tecnicos',
@@ -24,41 +20,23 @@ export class TecnicosComponent implements OnInit, OnDestroy {
     'cpf',
     'dataCriacao',
     'detalhe',
-    'acoes', // btn -> editar e deletar
+    'acoes',
   ];
 
   tecnicos$: Observable<Tecnico[]> = EMPTY;
-
-
-  pessoa: Pessoa = {} as Pessoa;
-
-
-
-  data: any;
-
-  currentDialog?: MatDialogRef<any> ;
   private destroy$ = new Subject<void>();
 
   constructor(
     private tecnicosService: TecnicosService,
     private toast: HotToastService,
-     private dialog: MatDialog,
-     private route: ActivatedRoute,
-     private router: Router,
-  )  {
-  }
+    private dialog: MatDialog,
+  ) {}
 
   openDialog(tecnico: Tecnico): void {
-     this.dialog.open(TecnicoDetailComponent, {
+    this.dialog.open(TecnicoDetailComponent, {
       width: '500px',
       data: { ...tecnico },
     });
-
-    // dialogRef.afterClosed().subscribe(result => {
-    //   console.log('The dialog was closed');
-    //   this.pessoa = result;
-    //   this.router.navigate(['.'], { relativeTo: this.route });
-    // });
   }
 
   onClickDelete(tecnico: Tecnico, id: number) {

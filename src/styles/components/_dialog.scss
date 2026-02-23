@@ -1,0 +1,31 @@
+// ============================================================
+// Dialog layout (logout, confirm, detail)
+// ============================================================
+
+.mat-mdc-dialog-container .mdc-dialog__surface,
+.mat-dialog-container {
+  border-radius: var(--radius-xl) !important;
+  padding: 0 !important;
+  min-width: 400px;
+  max-width: 560px;
+}
+
+.dialog-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-5) var(--space-6);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.dialog-content {
+  padding: var(--space-6);
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-6);
+  border-top: 1px solid var(--color-border);
+}

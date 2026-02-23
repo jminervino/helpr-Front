@@ -6,7 +6,6 @@ import { ChamadosService } from '../core/services/chamados/chamados.service';
 @Component({
   selector: 'app-chamados',
   templateUrl: './chamados.component.html',
-  styleUrls: ['./chamados.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ChamadosComponent implements OnInit {

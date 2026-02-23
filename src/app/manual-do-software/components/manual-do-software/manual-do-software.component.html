@@ -1,362 +1,82 @@
-<div class="body">
-    <div class="grid-list">
-        <mat-grid-list cols="8" rowHeight="60px">
-
-            <mat-grid-tile colspan="8" class="top-cell">
-                <h2>Suporte ao usuário</h2>
-            </mat-grid-tile>
-
-            <mat-grid-tile colspan="4" rowspan="2">
-                <mat-selection-list #options [multiple]="false" class="selection-list-formatation">
-                    <mat-list-option *ngFor="let option of userHelpOptions" [value]="option" (click)="onClick(option)"
-                        class="list-option-formatation">
-                        {{option}}
-                    </mat-list-option>
-                </mat-selection-list>
-            </mat-grid-tile>
-
-            <mat-grid-tile colspan="4" rowspan="2">
-                <div *ngIf="userHelpSelect[0]">
-                    <mat-selection-list #ErrosSubOptions [multiple]="false" class="selection-list-formatation">
-                        <mat-list-option *ngFor="let ErrosSubOptions of userHelpErrosSubOptions"
-                            [value]="ErrosSubOptions" (click)="onClick2(ErrosSubOptions)"
-                            class="list-option-formatation">
-                            {{ErrosSubOptions}}
-                        </mat-list-option>
-                    </mat-selection-list>
-                </div>
-
-                <div *ngIf="userHelpSelect[1]">
-                    <mat-selection-list #ClienteSubOptions [multiple]="false" class="selection-list-formatation">
-                        <mat-list-option *ngFor="let ClienteSubOptions of userHelpSuporteClienteSubOptions"
-                            [value]="ClienteSubOptions" (click)="onClick3(ClienteSubOptions)"
-                            class="list-option-formatation">
-                            {{ClienteSubOptions}}
-                        </mat-list-option>
-                    </mat-selection-list>
-                </div>
-
-                <div *ngIf="userHelpSelect[2]">
-                    <mat-selection-list #TecnicoSubOptions [multiple]="false" class="selection-list-formatation">
-                        <mat-list-option *ngFor="let TecnicoSubOptions of userHelpSuporteTecnicoSubOptions"
-                            [value]="TecnicoSubOptions" (click)="onClick4(TecnicoSubOptions)"
-                            class="list-option-formatation">
-                            {{TecnicoSubOptions}}
-                        </mat-list-option>
-                    </mat-selection-list>
-                </div>
-
-                <div *ngIf="userHelpSelect[3]">
-                    <mat-selection-list #ChamadosSubOptions [multiple]="false" class="selection-list-formatation">
-                        <mat-list-option *ngFor="let ChamadosSubOptions of userHelpChamadosSubOptions"
-                            [value]="ChamadosSubOptions" (click)="onClick5(ChamadosSubOptions)"
-                            class="list-option-formatation">
-                            {{ChamadosSubOptions}}
-                        </mat-list-option>
-                    </mat-selection-list>
-                </div>
-            </mat-grid-tile>
-
-            <mat-grid-tile colspan="8" rowspan="6">
-                <div *ngIf="userHelpSelect[0]">
-                    <div id="ngIF-erros-options">
-                        <div *ngIf="userHelpErrosSelect[0]" class="selection-list-formatation">
-                            <div class="img-left">
-                                <img src="https://raw.githubusercontent.com/victoricoma/helpr/main/img/imgAjuda/CpfInvalid.png" alt="CPF inválido image">
-                            </div>
-                            <span style="min-width:100px;"></span>
-                            <div class="card-text">
-                                <h1><strong>Erro 500</strong></h1>
-                                <p>O Erro 500 ocorre quando o preenchimento do CPF é inválido.</p>
-                                <p>Esse erro pode se dar por um dígito incorreto no CPF informado, <br> por falta de um digíto, ou similar. <br>
-                                    Por favor, confira se o CPF está correto, caso ele esteja correto <br> e mesmo assim esteja dando esse erro, por favor <br> contate nossa <a href="">Equipe de Suporte</a>.</p>
-                            </div>
-                        </div>
-
-                        <div *ngIf="userHelpErrosSelect[1]" class="selection-list-formatation">
-                            <div class="img-left">
-                                <img src="https://raw.githubusercontent.com/victoricoma/helpr/main/img/imgAjuda/CpfAlreadyRegisteredCut.png" width="70%"
-                                    height="100%" alt="Cpf já cadastrado image">
-                                <img src="https://raw.githubusercontent.com/victoricoma/helpr/main/img/imgAjuda/EmailAlreadyRegisteredCut.png" width="70%"
-                                    height="100%" alt="Email já cadastrado image">
-                            </div>
-                            <div class="card-text">
-                                <h1><strong>Erro 409</strong></h1>
-                                <p>O Erro 409 ocorre quando há conflito com a informação dada <br> com o nosso sistema,
-                                    possivelmente já tendo sido usada <br> para a criação de um cliente ou técnico.</p>
-                                <p>Caso seja o primeiro cadastro no nosso sistema e tenha esse erro, <br> entre em contato
-                                    com a nossa <a href="">Equipe de suporte</a>.</p>
-                            </div>
-                        </div>
-
-                        <div *ngIf="userHelpErrosSelect[2]" class="selection-list-formatation">
-                            <span style="min-width:150px;"></span>
-                            <div class="img-left">
-                                <img src="https://raw.githubusercontent.com/victoricoma/helpr/main/img/imgAjuda/404Page.png" height="100%"
-                                    alt="404 Not Found image">
-                            </div>
-                            <span style="min-width:150px;"></span>
-                            <div class="card-text">
-                                <h1><strong>Erro 404</strong></h1>
-                                <p>O Erro 404 ocorre quando o link/endereço não é encontrado.</p>
-                                <p>Caso esteja se deparando com esse erro, é possivel que nosso sistema tenha saido do ar, espere um período e tente se reconectar.</p>
-                                <p>Caso o link fique fora de ar por um periodo grande de tempo, por favor nos notifique entrando em contato com a nossa <a href="">Equipe de Suporte</a>.</p>
-                            </div>
-                        </div>
-
-                        <div *ngIf="userHelpErrosSelect[3]" class="selection-list-formatation">
-                            <span style="min-width:150px;"></span>
-                            <div class="img-left">
-                                <img src="https://raw.githubusercontent.com/victoricoma/helpr/main/img/imgAjuda/403Error.png" alt="403 Not Found image">
-                            </div>
-                            <span style="min-width:150px;"></span>
-                            <div class="card-text">
-                                <h1><strong>Erro 403</strong></h1>
-                                <p>O Erro 403 ocorre quando se é tentado fazer uma operação que sua conta não tem acesso permitido.</p>
-                                <p>Por favor, verifique qual é o seu tipo de conta. Caso precise modificar as permissões da sua conta, siga as etapas de edição contidas no manual do seu tipo de conta. <br>(Exemplo de uma conta tipo Cliente: Cliente -> Edição de cliente)</p>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div *ngIf="userHelpSelect[1]">
-                    <div id="ngIF-cliente">
-                        <div *ngIf="userHelpClienteSelect[0]" class="selection-list-formatation">
-                            <div class="img-left">
-                                <figure>
-                                    <img src="https://raw.githubusercontent.com/victoricoma/helpr/main/img/imgAjuda/ButtonClient1.png" alt="Criar Cliente image1">
-                                    <figcaption>Fig.1 - No Menu lateral.</figcaption>
-                                </figure>
-                                <figure>
-                                    <img src="https://raw.githubusercontent.com/victoricoma/helpr/main/img/imgAjuda/CreateClient2.png" alt="Criar Cliente image2">
-                                    <figcaption>Fig.2 - Criar Novo cliente.</figcaption>
-                                </figure>
-                            </div>
-                            <div class="card-text">
-                                <h1><strong>Como criar um Cliente</strong></h1>
-                                <p>Para criar um cliente, siga as seguintes etapas:</p>
-                                <ol>
-                                    <li>Abra o menu lateral e procure o botão "Clientes" e o selecione (Fig1).</li> <br>
-                                    <li>Após o carregamento da página, procure o botão "Novo cliente" e o selecione (Fig2).</li> <br>
-                                    <li>Entrando no formulário carregado após entrar em Novo cliente (Fig3), preencha com os dados do cliente e clique em "Criar".</li> <br>
-                                    <p>OBS: importante lembrar que a caixa cliente deve estar assinalada, selecionar outras caixas somente em excessões liberadas pelos supervisores.</p>
-                                </ol>
-                            </div>
-                            <div>
-                                <figure class="img-right">
-                                    <img src="https://raw.githubusercontent.com/victoricoma/helpr/main/img/imgAjuda/CreateClient3.png" width="100%" height="100%" alt="Criar Cliente image3">
-                                    <figcaption>Fig.3 - Formulário de criação de cliente.</figcaption>
-                                </figure>
-                            </div>
-                        </div>
-
-                        <div *ngIf="userHelpClienteSelect[1]" class="selection-list-formatation">
-                            <div class="img-left">
-                                <figure>
-                                    <img src="https://raw.githubusercontent.com/victoricoma/helpr/main/img/imgAjuda/ButtonClient1.png" alt="Modificar Cliente image1">
-                                    <figcaption>Fig.1 - No Menu lateral.</figcaption>
-                                </figure>
-                                <figure>
-                                    <img src="https://raw.githubusercontent.com/victoricoma/helpr/main/img/imgAjuda/ModifyClienteAndTecnico.png" alt="Modificar Cliente image2">
-                                    <figcaption>Fig.2 - Área de ações.</figcaption>
-                                </figure>
-                            </div>
-                            <div class="card-text">
-                                <h1><strong>Como Modificar um Cliente</strong></h1>
-                                <p>Para modificar um cliente no sistema, siga as seguintes etapas:</p>
-                                <ol>
-                                    <li>Abra o menu lateral e procure o botão "Clientes" e o selecione (Fig1).</li> <br>
-                                    <li>Após o carregamento da página, procure na tabela o cliente que quer modificar, e vá na coluna de "Ações"(Fig2).</li> <br>
-                                    <li>Para editar o cliente clique no botão com o icone de um lápis</li> <br>
-                                    <li>Carregando a página, ira carregar um formulário(Fig3) com os dados do cliente. Após as modificações clique em "Salvar".</li> <br>
-                                    <li>Para excluir o cliente, basta clicar no icone de lixeira, ao lado do icone de modicação.</li>
-                                </ol>
-                            </div>
-                            <div>
-                                <figure class="img-right">
-                                    <img src="https://raw.githubusercontent.com/victoricoma/helpr/main/img/imgAjuda/EditCliente.png" width="100%" height="100%" alt="Modificar Cliente image3">
-                                    <figcaption>Fig.3 - Formulário modificação de cliente.</figcaption>
-                                </figure>
-                            </div>
-                        </div>
-
-                        <div *ngIf="userHelpClienteSelect[2]" class="selection-list-formatation" style="flex-direction:column">
-                            <div class="card-text">
-                                <h1><strong>Informações do Cliente</strong></h1>
-                                <p>Para acessar as informações do cliente, siga as seguintes etapas:</p>
-                                <ol>
-                                    <li>Abra o menu lateral e procure o botão "Clientes" e o selecione.</li> <br>
-                                    <li>Após o carregamento da página, você terá acesso a uma tabela com todos os clientes e seus dados.</li> <br>
-                                </ol>
-                                <div class="img-left">
-                                    <img src="https://raw.githubusercontent.com/victoricoma/helpr/main/img/imgAjuda/InformationsClient.png" width="100%" alt="Informações Cliente">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div *ngIf="userHelpSelect[2]">
-                    <div id="ngIF-tecnico">
-                        <div *ngIf="userHelpTecnicoSelect[0]" class="selection-list-formatation">
-                            <div class="img-left">
-                                <figure>
-                                    <img src="https://raw.githubusercontent.com/victoricoma/helpr/main/img/imgAjuda/ButtonTecnico1.png" alt="Criar Técnico image1">
-                                    <figcaption>Fig.1 - No Menu lateral.</figcaption>
-                                </figure>
-                                <figure>
-                                    <img src="https://raw.githubusercontent.com/victoricoma/helpr/main/img/imgAjuda/CreateTecnico2.png" alt="Criar Técnico image2">
-                                    <figcaption>Fig.2 - Criar Novo Técnico.</figcaption>
-                                </figure>
-                            </div>
-                            <div class="card-text">
-                                <h1><strong>Como criar um Técnico</strong></h1>
-                                <p>Para criar um Técnico no sistema, siga as seguintes etapas:</p>
-                                <ol>
-                                    <li>Abra o menu lateral e procure o botão "Técnico" e o selecione (Fig1).</li> <br>
-                                    <li>Após o carregamento da página, procure o botão "Novo Técnico" e o selecione (Fig2).</li> <br>
-                                    <li>Entrando no formulário carregado após entrar em Novo Técnico (Fig3), preencha com os dados do Técnico e clique em "Criar".</li> <br>
-                                    <p>OBS: importante lembrar que a caixa Técnico deve estar assinalada, selecionar outras caixas somente em excessões liberadas pelos supervisores.</p>
-                                </ol>
-                            </div>
-                            <div>
-                                <figure class="img-right">
-                                    <img src="https://raw.githubusercontent.com/victoricoma/helpr/main/img/imgAjuda/CreateTecnico3.png" width="100%" height="100%" alt="Criar Técnico image3">
-                                    <figcaption>Fig.3 - Formulário de criação de Técnico .</figcaption>
-                                </figure>
-                            </div>
-                        </div>
-
-                        <div *ngIf="userHelpTecnicoSelect[1]" class="selection-list-formatation">
-                            <div class="img-left">
-                                <figure>
-                                    <img src="https://raw.githubusercontent.com/victoricoma/helpr/main/img/imgAjuda/ButtonTecnico1.png" alt="Modificar tecnico image1">
-                                    <figcaption>Fig.1 - No Menu lateral.</figcaption>
-                                </figure>
-                                <figure>
-                                    <img src="https://raw.githubusercontent.com/victoricoma/helpr/main/img/imgAjuda/ModifyClienteAndTecnico.png" alt="Modificar tecnico image2">
-                                    <figcaption>Fig.2 - Área de ações.</figcaption>
-                                </figure>
-                            </div>
-                            <div class="card-text">
-                                <h1><strong>Como Modificar um técnico</strong></h1>
-                                <p>Para modificar um técnico no sistema, siga as seguintes etapas:</p>
-                                <ol>
-                                    <li>Abra o menu lateral e procure o botão "Técnicos" e o selecione (Fig1).</li> <br>
-                                    <li>Após o carregamento da página, procure na tabela o técnico que quer modificar, e vá na coluna de "Ações"(Fig2).</li> <br>
-                                    <li>Para editar o técnico clique no botão com o icone de um lápis</li> <br>
-                                    <li>Carregando a página, ira carregar um formulário(Fig3) com os dados do técnico. Após as modificações clique em "Salvar".</li> <br>
-                                    <li>Para excluir o técnico, basta clicar no icone de lixeira, ao lado do icone de modicação.</li>
-                                </ol>
-                            </div>
-                            <div>
-                                <figure class="img-right">
-                                    <img src="https://raw.githubusercontent.com/victoricoma/helpr/main/img/imgAjuda/EditTecnico.png" width="100%" height="100%" alt="Modificar tecnico image3">
-                                    <figcaption>Fig.3 - Formulário modificação de Técnico.</figcaption>
-                                </figure>
-                            </div>
-                        </div>
-
-                        <div *ngIf="userHelpTecnicoSelect[2]" class="selection-list-formatation" style="flex-direction:column">
-                            <div class="card-text">
-                                <h1><strong>Informações do Técnico</strong></h1>
-                                <p>Para acessar as informações do Técnico, siga as seguintes etapas:</p>
-                                <ol>
-                                    <li>Abra o menu lateral e procure o botão "Técnicos" e o selecione.</li> <br>
-                                    <li>Após o carregamento da página, você terá acesso a uma tabela com todos os Técnicos e seus dados.</li> <br>
-                                </ol>
-                                <div class="img-left">
-                                    <img src="https://raw.githubusercontent.com/victoricoma/helpr/main/img/imgAjuda/InformationsTecnico.png" width="100%" alt="Informações Técnico">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div *ngIf="userHelpSelect[3]">
-                    <div id="ngIF-Chamado">
-                        <div *ngIf="userHelpChamadosSelect[0]" class="selection-list-formatation">
-                            <div class="img-left">
-                                <figure>
-                                    <img src="https://raw.githubusercontent.com/victoricoma/helpr/main/img/imgAjuda/ButtonChamados1.png" alt="Criar Chamado image1">
-                                    <figcaption>Fig.1 - No Menu lateral.</figcaption>
-                                </figure>
-                                <figure>
-                                    <img src="https://raw.githubusercontent.com/victoricoma/helpr/main/img/imgAjuda/CreateChamados2.png" alt="Criar Chamado image2">
-                                    <figcaption>Fig.2 - Criar Novo Chamado.</figcaption>
-                                </figure>
-                            </div>
-                            <div class="card-text">
-                                <h1><strong>Como criar um Chamado</strong></h1>
-                                <p>Para criar um Chamado no sistema, siga as seguintes etapas:</p>
-                                <ol>
-                                    <li>Abra o menu lateral e procure o botão "Chamado" e o selecione (Fig1).</li> <br>
-                                    <li>Após o carregamento da página, procure o botão "Novo Chamado" e o selecione (Fig2).</li> <br>
-                                    <li>Entrando no formulário carregado após entrar em Novo Chamado (Fig3), preencha com os dados do Chamado e clique em "Criar".</li> <br>
-                                </ol>
-                            </div>
-                            <div>
-                                <figure class="img-right">
-                                    <img src="https://raw.githubusercontent.com/victoricoma/helpr/main/img/imgAjuda/CreateChamados3.png" width="85%" height="100%" alt="Criar Chamado image3">
-                                    <figcaption>Fig.3 - Formulário de criação de Chamado .</figcaption>
-                                </figure>
-                            </div>
-
-                        </div>
-
-                        <div *ngIf="userHelpChamadosSelect[1]" class="selection-list-formatation">
-                            <div class="img-left">
-                                <figure>
-                                    <img src="https://raw.githubusercontent.com/victoricoma/helpr/main/img/imgAjuda/ButtonChamados1.png" alt="Modificar chamado image1">
-                                    <figcaption>Fig.1 - No Menu lateral.</figcaption>
-                                </figure>
-                                <figure>
-                                    <img src="https://raw.githubusercontent.com/victoricoma/helpr/main/img/imgAjuda/ModifyClienteAndTecnico.png" alt="Modificar chamado image2">
-                                    <figcaption>Fig.2 - Área de ações.</figcaption>
-                                </figure>
-                            </div>
-                            <div class="card-text">
-                                <h1><strong>Como Modificar um chamado</strong></h1>
-                                <p>Para modificar um chamado no sistema, siga as seguintes etapas:</p>
-                                <ol>
-                                    <li>Abra o menu lateral e procure o botão "chamados" e o selecione (Fig1).</li> <br>
-                                    <li>Após o carregamento da página, procure na tabela o chamado que quer modificar, e vá na coluna de "Ações"(Fig2).</li> <br>
-                                    <li>Para editar o chamado clique no botão com o icone de um lápis</li> <br>
-                                    <li>Carregando a página, ira carregar um formulário(Fig3) com os dados do chamado. Após as modificações clique em "Salvar".</li> <br>
-                                    <li>Para excluir o chamado, basta clicar no icone de lixeira, ao lado do icone de modicação.</li>
-                                </ol>
-                            </div>
-                            <div>
-                                <figure class="img-right">
-                                    <img src="https://raw.githubusercontent.com/victoricoma/helpr/main/img/imgAjuda/EditChamado.png" width="80%" height="90%" alt="Modificar chamado image3">
-                                    <figcaption>Fig.3 - Formulário modificação de chamado.</figcaption>
-                                </figure>
-                            </div>
-                        </div>
-
-                        <div *ngIf="userHelpChamadosSelect[2]" class="selection-list-formatation">
-                            <div class="card-text">
-                                <h1><strong>Informações do Chamado</strong></h1>
-                                <p>Para acessar as informações do Chamado, siga as seguintes etapas:</p>
-                                <ol>
-                                    <li>Abra o menu lateral e procure o botão "Chamados" e o selecione.</li> <br>
-                                    <li>Após o carregamento da página, você terá acesso a uma tabela com todos os Chamados e seus dados.</li> <br>
-                                </ol>
-                                <div class="img-left">
-                                    <img src="https://raw.githubusercontent.com/victoricoma/helpr/main/img/imgAjuda/InformationsTecnico.png" width="100%" alt="Informações Chamado">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </mat-grid-tile>
-
-            <mat-grid-tile colspan="8" class="bot-cell">
-                <p>Caso o conteúdo aqui não solucione ou esclareça o seu problema, entre em contato com a nossa <a href="">Equipe de suporte</a>.</p>
-            </mat-grid-tile>
-        </mat-grid-list>
+<div class="manual">
+  <!-- Header -->
+  <div class="manual-header">
+    <mat-icon class="manual-header__icon">menu_book</mat-icon>
+    <div>
+      <h1 class="manual-header__title">Manual do Software</h1>
+      <p class="manual-header__subtitle">Selecione um topico para ver as instrucoes</p>
     </div>
+  </div>
+
+  <div class="manual-body">
+    <!-- Sidebar Navigation -->
+    <aside class="manual-sidebar">
+      <div *ngFor="let topic of topics" class="manual-topic">
+        <button
+          class="manual-topic__btn"
+          [class.manual-topic__btn--active]="activeTopic === topic"
+          (click)="selectTopic(topic)"
+        >
+          <mat-icon class="manual-topic__icon">{{ topic.icon }}</mat-icon>
+          <span>{{ topic.label }}</span>
+          <mat-icon class="manual-topic__chevron">
+            {{ activeTopic === topic ? 'expand_less' : 'expand_more' }}
+          </mat-icon>
+        </button>
+
+        <div class="manual-topic__items" *ngIf="activeTopic === topic">
+          <button
+            *ngFor="let item of topic.items"
+            class="manual-item__btn"
+            [class.manual-item__btn--active]="activeItem === item"
+            (click)="selectItem(item)"
+          >
+            {{ item.label }}
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Content Area -->
+    <main class="manual-content">
+      <!-- Empty State -->
+      <div class="manual-empty" *ngIf="!activeItem">
+        <mat-icon class="manual-empty__icon">touch_app</mat-icon>
+        <p class="manual-empty__text">Selecione um topico no menu ao lado para comecar</p>
+      </div>
+
+      <!-- Active Item Content -->
+      <div class="manual-article" *ngIf="activeItem">
+        <h2 class="manual-article__title">{{ activeItem.title }}</h2>
+        <p class="manual-article__description">{{ activeItem.description }}</p>
+
+        <!-- Steps -->
+        <ol class="manual-article__steps" *ngIf="activeItem.steps?.length">
+          <li *ngFor="let step of activeItem.steps" class="manual-article__step">
+            {{ step }}
+          </li>
+        </ol>
+
+        <!-- Note -->
+        <div class="manual-article__note" *ngIf="activeItem.note">
+          <mat-icon>info</mat-icon>
+          <span>{{ activeItem.note }}</span>
+        </div>
+
+        <!-- Images -->
+        <div class="manual-article__images" *ngIf="activeItem.images?.length">
+          <figure *ngFor="let img of activeItem.images" class="manual-article__figure">
+            <img [src]="img.src" [alt]="img.caption" loading="lazy" />
+            <figcaption>{{ img.caption }}</figcaption>
+          </figure>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Footer -->
+  <div class="manual-footer">
+    <mat-icon>support_agent</mat-icon>
+    <span>Caso o conteudo aqui nao solucione o seu problema, entre em contato com a Equipe de Suporte.</span>
+  </div>
 </div>

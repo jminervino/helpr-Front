@@ -1,0 +1,36 @@
+// ============================================================
+// Responsive breakpoints (align with Angular CDK / Material)
+// Use with @include responsive(md) { ... } for mobile-first.
+// ============================================================
+
+$breakpoint-xs: 0;       // Phone portrait
+$breakpoint-sm: 600px;   // Phone landscape / small tablet
+$breakpoint-md: 960px;   // Tablet
+$breakpoint-lg: 1280px;  // Desktop
+$breakpoint-xl: 1920px;  // Large desktop
+
+@mixin responsive($breakpoint) {
+  @if $breakpoint == sm {
+    @media (min-width: 600px) {
+      @content;
+    }
+  }
+  @if $breakpoint == md {
+    @media (min-width: 960px) {
+      @content;
+    }
+  }
+  @if $breakpoint == lg {
+    @media (min-width: 1280px) {
+      @content;
+    }
+  }
+  @if $breakpoint == xl {
+    @media (min-width: 1920px) {
+      @content;
+    }
+  }
+}
+
+// Mobile-first usage:
+// .element { padding: var(--space-4); @include responsive(md) { padding: var(--space-8); } }

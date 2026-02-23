@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { HotToastService } from '@ngneat/hot-toast';
 import { Cliente } from 'src/app/core/models/pessoa';
 import { ClientesService } from 'src/app/core/services/clientes/clientes.service';
-import { someTrue, trueIndexes } from 'src/app/shared/utils';
+import { someTrue, selectedPerfils } from 'src/app/shared/utils';
 
 @Component({
   selector: 'app-cliente-create',
@@ -12,6 +12,8 @@ import { someTrue, trueIndexes } from 'src/app/shared/utils';
   styleUrls: ['./cliente-create.component.scss'],
 })
 export class ClienteCreateComponent implements OnInit {
+  ocultar = true;
+
   clienteForm = this.fb.group({
     nome: [null as string | null, [Validators.required]],
     cpf: [null as string | null, [Validators.required, Validators.maxLength(14)]],
@@ -30,7 +32,7 @@ export class ClienteCreateComponent implements OnInit {
   onSubmit() {
     const cliente = {
       ...this.clienteForm.value,
-      perfils: trueIndexes(((this.clienteForm.value.perfils ?? []) as (boolean | null)[]).map((value) => !!value)),
+      perfils: selectedPerfils(((this.clienteForm.value.perfils ?? []) as (boolean | null)[]).map((value) => !!value)),
     } as Cliente;
 
     const ref = this.toast.loading('Adicionando cliente');

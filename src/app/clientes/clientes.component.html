@@ -1,18 +1,32 @@
-<div
-  class="mat-elevation-z8"
-  *ngIf="clientes$ | async as dataSource; else loading"
->
-  <h2>Lista de clientes</h2>
-  <div class="table-wrapper">
+<ng-container *ngIf="clientes$ | async as dataSource; else loading">
+  <app-page-header
+    title="Lista de clientes"
+    actionLabel="Novo cliente"
+    actionIcon="add"
+    actionRoute="new">
+  </app-page-header>
+
+  <div class="page-content">
+    <div *ngIf="dataSource.length === 0; else tableBlock" class="data-table-container">
+      <app-empty-state
+        icon="people"
+        title="Nenhum cliente encontrado"
+        description="Cadastre um novo cliente para começar"
+        actionLabel="Novo cliente"
+        actionRoute="new">
+      </app-empty-state>
+    </div>
+    <ng-template #tableBlock>
+    <div class="data-table-container">
+      <div class="table-responsive">
     <table mat-table [dataSource]="dataSource" [trackBy]="trackById">
       <ng-container matColumnDef="id">
-        <th mat-header-cell *matHeaderCellDef style="min-width: 30px;">#</th>
+        <th mat-header-cell *matHeaderCellDef>#</th>
         <td mat-cell *matCellDef="let cliente">{{ cliente.id }}</td>
       </ng-container>
       <ng-container matColumnDef="nome">
         <th mat-header-cell *matHeaderCellDef>Nome</th>
-        <td mat-cell *matCellDef="let cliente"(click)="onClickCliente(cliente.id)"
-        class="mouseIndicator">{{ cliente.nome }}</td>
+        <td mat-cell *matCellDef="let cliente" (click)="onClickCliente(cliente.id)" class="mouseIndicator">{{ cliente.nome }}</td>
       </ng-container>
       <ng-container matColumnDef="email">
         <th mat-header-cell *matHeaderCellDef>Email</th>
@@ -24,16 +38,12 @@
       </ng-container>
       <ng-container matColumnDef="dataCriacao">
         <th mat-header-cell *matHeaderCellDef>Criado em</th>
-        <td mat-cell *matCellDef="let cliente">
-          {{ cliente.dataCriacao }}
-        </td>
+        <td mat-cell *matCellDef="let cliente">{{ cliente.dataCriacao }}</td>
       </ng-container>
       <ng-container matColumnDef="detalhe">
         <th mat-header-cell *matHeaderCellDef>Detalhe</th>
         <td mat-cell *matCellDef="let element">
-          <a mat-icon-button color="primary"
-            (click)="openDialog(element)"
-            matTooltip="Perfil usuario">
+          <a mat-icon-button color="primary" (click)="openDialog(element)" matTooltip="Perfil usuario">
             <mat-icon>account_circle</mat-icon>
           </a>
         </td>
@@ -41,36 +51,25 @@
       <ng-container matColumnDef="acoes">
         <th mat-header-cell *matHeaderCellDef>Ações</th>
         <td mat-cell *matCellDef="let element">
-          <a
-            mat-icon-button
-            color="primary"
-            routerLink="edit/{{ element.id }}"
-            matTooltip="Editar cliente"
-          >
-            <mat-icon>edit</mat-icon>
-          </a>
-          <a
-          mat-icon-button
-          (click)="onClickDelete(element,element.id)"
-          color="warn"
-          matTooltip="Deletar cliente"
-        >
-            <mat-icon>delete</mat-icon>
-          </a>
+          <div class="actions-cell">
+            <a mat-icon-button color="primary" routerLink="edit/{{ element.id }}" matTooltip="Editar cliente">
+              <mat-icon>edit</mat-icon>
+            </a>
+            <a mat-icon-button color="warn" (click)="onClickDelete(element, element.id)" matTooltip="Deletar cliente">
+              <mat-icon>delete</mat-icon>
+            </a>
+          </div>
         </td>
       </ng-container>
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
+      </div>
+    </div>
+    </ng-template>
   </div>
-  <div class="buttonfab">
-    <a mat-fab color="accent" routerLink="new">
-      <mat-icon>people</mat-icon>
-    </a>
-  </div> 
-</div>
+</ng-container>
 
 <ng-template #loading>
-  <app-loader label="Carregando clientes...">
-  </app-loader>
+  <app-loader label="Carregando clientes..."></app-loader>
 </ng-template>

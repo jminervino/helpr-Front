@@ -8,6 +8,10 @@ import { RoleGuardGuard } from './core/guards/role.guard';
 
 const routes: Routes = [
   {
+    path: 'landing',
+    loadChildren: () => import('./landing/landing.module').then((m) => m.LandingModule),
+  },
+  {
     path: 'auth',
     canActivate: [AuthLogadoGuard],
     loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),

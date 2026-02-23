@@ -18,7 +18,6 @@ export class AppComponent {
     router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe((event: NavigationEnd | any) => {
-        // console.log('URL ativa: ', event.url);
         switch (event.url) {
           case '/home':
             titleService.setTitle('Home');

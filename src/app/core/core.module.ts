@@ -12,8 +12,8 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
-
-
+import { MatBadgeModule } from '@angular/material/badge';
+import { MatDividerModule } from '@angular/material/divider';
 
 @NgModule({
   declarations: [HeaderComponent, NotFoundComponent, DialogComponent],
@@ -27,7 +27,9 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatButtonModule,
     MatMenuModule,
     MatTooltipModule,
-    MatDialogModule
+    MatDialogModule,
+    MatBadgeModule,
+    MatDividerModule,
   ]
 })
 export class CoreModule { }

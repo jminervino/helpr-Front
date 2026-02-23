@@ -1,7 +1,7 @@
-<div class="container">
-  <div class="form-wrapper">
+<div class="page-container--narrow">
+  <div class="form-card">
+    <h2 class="form-card__title">Novo chamado</h2>
     <form [formGroup]="chamadoForm" (ngSubmit)="onSubmit()">
-      <h2>Novo chamado</h2>
       <mat-form-field appearance="fill">
         <mat-label>Título</mat-label>
         <input
@@ -15,69 +15,56 @@
         >
         <mat-icon matPrefix>assignment</mat-icon>
       </mat-form-field>
-      <mat-form-field appearance="fill">
-        <mat-label>Selecione um status</mat-label>
-        <mat-select name="status" formControlName="status" required>
-          <mat-option [value]="0">ABERTO</mat-option>
-          <mat-option [value]="1">EM ANDAMENTO</mat-option>
-          <mat-option [value]="2">ENCERRADO</mat-option>
-        </mat-select>
-        <mat-error *ngIf="chamadoForm.get('status')?.errors?.['required']"
-          >Campo obrigatório</mat-error
-        >
-        <mat-icon matPrefix>check_circle</mat-icon>
-      </mat-form-field>
-      <mat-form-field appearance="fill">
-        <mat-label>Selecione a prioridade</mat-label>
-        <mat-select name="status" formControlName="prioridade" required>
-          <mat-option [value]="0">BAIXA</mat-option>
-          <mat-option [value]="1">MÉDIA</mat-option>
-          <mat-option [value]="2">ALTA</mat-option>
-        </mat-select>
-        <mat-icon matPrefix>check_circle</mat-icon>
-        <mat-error *ngIf="chamadoForm.get('prioridade')?.errors?.['required']"
-          >Campo obrigatório</mat-error
-        >
-      </mat-form-field>
+      <div class="form-row">
+        <mat-form-field appearance="fill">
+          <mat-label>Status</mat-label>
+          <mat-select formControlName="status" required>
+            <mat-option value="ABERTO">ABERTO</mat-option>
+            <mat-option value="ANDAMENTO">EM ANDAMENTO</mat-option>
+            <mat-option value="ENCERRADO">ENCERRADO</mat-option>
+          </mat-select>
+          <mat-error *ngIf="chamadoForm.get('status')?.errors?.['required']">Campo obrigatorio</mat-error>
+          <mat-icon matPrefix>check_circle</mat-icon>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Prioridade</mat-label>
+          <mat-select formControlName="prioridade" required>
+            <mat-option value="BAIXA">BAIXA</mat-option>
+            <mat-option value="MEDIA">MEDIA</mat-option>
+            <mat-option value="ALTA">ALTA</mat-option>
+          </mat-select>
+          <mat-icon matPrefix>priority_high</mat-icon>
+          <mat-error *ngIf="chamadoForm.get('prioridade')?.errors?.['required']">Campo obrigatorio</mat-error>
+        </mat-form-field>
+      </div>
   
-      <mat-form-field class="full-width" appearance="fill">
-        <mat-label>Selecione um técnico</mat-label>
-        <mat-select name="tecnico" formControlName="tecnico" required>
-          <mat-option *ngFor="let tec of tecnicos$ | async" [value]="tec.id">{{
-            tec.nome
-          }}</mat-option>
+      <mat-form-field appearance="fill">
+        <mat-label>Tecnico</mat-label>
+        <mat-select formControlName="tecnico" required>
+          <mat-option *ngFor="let tec of tecnicos$ | async" [value]="tec.id">{{ tec.nome }}</mat-option>
         </mat-select>
         <mat-icon matPrefix>engineering</mat-icon>
       </mat-form-field>
-  
-      <mat-form-field class="full-width" appearance="fill">
-        <mat-label>Selecione um cliente</mat-label>
-        <mat-select name="cliente" formControlName="cliente" required>
-          <mat-option
-            *ngFor="let cliente of clientes$ | async"
-            [value]="cliente.id"
-            >{{ cliente.nome }}</mat-option
-          >
+
+      <mat-form-field appearance="fill">
+        <mat-label>Cliente</mat-label>
+        <mat-select formControlName="cliente" required>
+          <mat-option *ngFor="let cliente of clientes$ | async" [value]="cliente.id">{{ cliente.nome }}</mat-option>
         </mat-select>
         <mat-icon matPrefix>people</mat-icon>
       </mat-form-field>
-  
-      <mat-form-field class="full-width" appearance="fill">
-        <mat-label>Deixe uma observação</mat-label>
-        <textarea
-          name="observacoes"
-          formControlName="observacoes"
-          required
-          class="observacoes"
-          matInput
-          placeholder="Ex. trocar bateria de notebook queimada..."
-        ></textarea>
-        <mat-icon matPrefix>assignment</mat-icon>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Observacoes</mat-label>
+        <textarea matInput formControlName="observacoes" required rows="4"
+          placeholder="Ex. trocar bateria de notebook queimada..."></textarea>
+        <mat-icon matPrefix>notes</mat-icon>
       </mat-form-field>
   
-      <button mat-raised-button color="primary" [disabled]="chamadoForm.invalid">
-        Criar
-      </button>
-    </form>
+    <div class="form-card__actions">
+      <button mat-button type="button" routerLink="/chamados">Cancelar</button>
+      <button mat-flat-button color="primary" [disabled]="chamadoForm.invalid">Criar chamado</button>
+    </div>
+  </form>
   </div>
 </div>

@@ -3,6 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { HotToastService } from '@ngneat/hot-toast';
+import { switchMap, tap } from 'rxjs';
 import { AuthService } from '../core/services/auth/auth.service';
 
 @Component({
@@ -31,26 +32,22 @@ export class AuthComponent implements OnInit {
 
     const ref = this.toast.loading('Fazendo login...');
 
-    this.authService.login(email, senha).subscribe({
-      next: (response) => {
+    this.authService.login(email, senha).pipe(
+      tap((response) => {
         const token = response.headers.get('Authorization');
         this.authService.onLogin(token!.substring(7));
-        this.authService.loadUserRole().subscribe({
-          next: () => {
-            ref.close();
-            this.router.navigate(['/']);
-            this.toast.success('Seja bem-vindo(a)!');
-          },
-          error: () => {
-            ref.close();
-            this.toast.error('Nao foi possivel carregar o perfil do usuario');
-          },
-        });
-      },
-      error: (err) => {
-        window.navigator?.vibrate?.(200);
-        this.toast.error('Email/senha inválido(s)');
+      }),
+      switchMap(() => this.authService.loadUserRole())
+    ).subscribe({
+      next: () => {
         ref.close();
+        this.router.navigate(['/']);
+        this.toast.success('Seja bem-vindo(a)!');
+      },
+      error: () => {
+        window.navigator?.vibrate?.(200);
+        ref.close();
+        this.toast.error('Email/senha inválido(s)');
       },
     });
   }

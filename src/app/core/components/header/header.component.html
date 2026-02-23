@@ -6,68 +6,131 @@
     fixedInViewport
     [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
     [mode]="(isHandset$ | async) ? 'over' : 'side'"
-    [opened]="(isHandset$ | async) === true"
+    [opened]="(isHandset$ | async) ? sidebarOpen : true"
+    (closed)="sidebarOpen = false"
   >
-    <mat-toolbar class="logo"><img src="assets/img/txt1.png" width="112" /></mat-toolbar>
-    <mat-nav-list>
-      <a class="menu-label" mat-list-item [matMenuTriggerFor]="menu">
-        <mat-icon>more_vert</mat-icon>Suas informações
-      </a>
-      <mat-menu #menu="matMenu">
-        <span mat-menu-item> <span class="mat-caption email email-role"><b>Perfil: </b> {{roleUser}}</span> </span>
-        <span mat-menu-item><span class="mat-caption email"><b>Email:</b>{{emailUser}}</span></span>
-        <span mat-menu-item>
-          <div class="token_date">
-            <span><b>Sessão expira em:</b>
-              {{tokenExpirationDate | date: "dd/MM/YYYY"}}</span>
-          </div>
-        </span>
-      </mat-menu>
+    <!-- Logo -->
+    <div class="sidebar-logo">
+      <img src="assets/img/helpr-large-white-logo.png" width="120" alt="Helpr Manager" />
+    </div>
+
+    <!-- User Info Card -->
+    <div class="sidebar-user">
+      <div class="sidebar-user__avatar">
+        <mat-icon>account_circle</mat-icon>
+      </div>
+      <div class="sidebar-user__info">
+        <span class="sidebar-user__role">{{ roleUser }}</span>
+        <span class="sidebar-user__email">{{ emailUser }}</span>
+      </div>
+    </div>
+
+    <div class="sidebar-divider"></div>
+
+    <!-- Navigation -->
+    <nav class="sidebar-nav">
       <a
-        mat-list-item
+        class="sidebar-nav__item"
         *ngFor="let item of itensMenu; trackBy: trackByLink"
         [routerLink]="item.link"
-        routerLinkActive="selected"
+        routerLinkActive="sidebar-nav__item--active"
+        (click)="closeDrawer()"
       >
-        <mat-icon>{{ item.icon }}</mat-icon>
-        <span class="menu-label">{{ item.label }}</span>
+        <mat-icon class="sidebar-nav__icon">{{ item.icon }}</mat-icon>
+        <span class="sidebar-nav__label">{{ item.label }}</span>
       </a>
-      <a mat-list-item *ngIf="userAdmin" [routerLink]="['/admin']">
-        <mat-icon>admin_panel_settings</mat-icon>
-        <span class="menu-label">Administrar</span>
+      <a
+        class="sidebar-nav__item"
+        *ngIf="userAdmin"
+        [routerLink]="['/admin']"
+        routerLinkActive="sidebar-nav__item--active"
+        (click)="closeDrawer()"
+      >
+        <mat-icon class="sidebar-nav__icon">admin_panel_settings</mat-icon>
+        <span class="sidebar-nav__label">Administrar</span>
       </a>
-      <a mat-list-item (click)="logout()" 
-      matTooltip="Click para sair"
-      matTooltipPosition="below"
-      matTooltipShowDelay="1000">
-        <mat-icon>logout</mat-icon>
-        <span class="menu-label">Sair</span>
+    </nav>
+
+    <!-- Session info + Logout at bottom -->
+    <div class="sidebar-footer">
+      <div class="sidebar-footer__session" *ngIf="tokenExpirationDate">
+        <mat-icon class="sidebar-footer__icon">schedule</mat-icon>
+        <span>Sessao expira: {{ tokenExpirationDate | date: "dd/MM/yyyy" }}</span>
+      </div>
+      <div class="sidebar-divider"></div>
+      <a class="sidebar-nav__item sidebar-nav__item--danger" (click)="logout(); closeDrawer()">
+        <mat-icon class="sidebar-nav__icon">logout</mat-icon>
+        <span class="sidebar-nav__label">Sair</span>
       </a>
-    </mat-nav-list>
-    <div class="redes-sociais">
-      <a href="https://twitter.com/SoulCodeAcademy?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor" target="_blank" ><img src='assets\img\icons8-twitter-24.png'/></a>
-      <a href="http://www.instagram.com/SoulCodeAcademy/" target="_blank"><img src='assets\img\icons8-instagram-24.png'/></a>
-      <a href="https://www.facebook.com/SoulCodeAcademy/" target="_blank" ><img src='assets\img\icons8-facebook-novo-24.png'/></a>
-      <a href="https://br.linkedin.com/company/soulcodeacademy" target="_blank"><img src='assets\img\icons8-linkedin-24.png'/></a>
     </div>
   </mat-sidenav>
+
   <mat-sidenav-content>
-      <mat-toolbar color="primary">
+    <!-- TopBar (sticky) -->
+    <mat-toolbar class="app-topbar">
+      <div class="topbar__left">
         <button
           type="button"
           aria-label="Toggle sidenav"
           mat-icon-button
-          (click)="drawer.toggle()"
+          class="topbar__menu-btn"
+          (click)="toggleDrawer()"
         >
-          <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+          <mat-icon>menu</mat-icon>
         </button>
-        <a routerLink="/home">
-          <span class="brand"
-            ><img
-              src="https://raw.githubusercontent.com/victoricoma/helpr/main/img/logoQuadrado/3.png"
-              width="48" /></span
-        ></a>
-      </mat-toolbar>
-    <router-outlet></router-outlet>
+        <span class="topbar__page-title">{{ pageTitle }}</span>
+      </div>
+
+      <div class="topbar__right">
+        <button mat-icon-button class="topbar__action" matTooltip="Notificacoes" [matMenuTriggerFor]="notifMenu">
+          <mat-icon [matBadge]="notificationCount" matBadgeColor="warn" [matBadgeHidden]="notificationCount === 0" matBadgeSize="small">notifications</mat-icon>
+        </button>
+        <mat-menu #notifMenu="matMenu" class="notif-menu">
+          <div class="notif-menu__header" mat-menu-item disabled>
+            <span>Notificacoes</span>
+          </div>
+          <button mat-menu-item disabled>
+            <mat-icon>info</mat-icon>
+            <span>Nenhuma notificacao</span>
+          </button>
+        </mat-menu>
+
+        <button mat-icon-button class="topbar__action" matTooltip="Tela cheia" (click)="toggleFullscreen()">
+          <mat-icon>{{ isFullscreen ? 'fullscreen_exit' : 'fullscreen' }}</mat-icon>
+        </button>
+
+        <div class="topbar__divider"></div>
+
+        <div class="topbar__user" [matMenuTriggerFor]="userMenu">
+          <div class="topbar__user-avatar">
+            <mat-icon>person</mat-icon>
+          </div>
+          <span class="topbar__user-name">{{ emailUser | slice:0:20 }}</span>
+          <mat-icon class="topbar__user-arrow">expand_more</mat-icon>
+        </div>
+        <mat-menu #userMenu="matMenu">
+          <button mat-menu-item routerLink="/home">
+            <mat-icon>home</mat-icon>
+            <span>Pagina Inicial</span>
+          </button>
+          <button mat-menu-item routerLink="/manual-do-software">
+            <mat-icon>help_outline</mat-icon>
+            <span>Manual</span>
+          </button>
+          <mat-divider></mat-divider>
+          <button mat-menu-item (click)="logout()">
+            <mat-icon color="warn">logout</mat-icon>
+            <span>Sair</span>
+          </button>
+        </mat-menu>
+      </div>
+    </mat-toolbar>
+
+    <!-- Content Area -->
+    <div class="content-area">
+      <div class="page-container">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
   </mat-sidenav-content>
 </mat-sidenav-container>

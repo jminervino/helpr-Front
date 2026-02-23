@@ -1,104 +1,127 @@
-<div id="carouselExampleControls" class="mb-5 carousel slide" style="margin-top:30px" data-bs-ride="carousel">
-  <div class="carousel-inner">
-    <div class="carousel-item active">
-      <img src="https://raw.githubusercontent.com/victoricoma/helpr/main/img/outsiteBanner/1.png" class="d-block w-100" alt="...">
-    </div>
-    <div class="carousel-item">
-      <img src="https://raw.githubusercontent.com/victoricoma/helpr/main/img/outsiteBanner/5.png" class="d-block w-100" alt="...">
-    </div>
-    <div class="carousel-item">
-      <img src="https://raw.githubusercontent.com/victoricoma/helpr/main/img/outsiteBanner/6.png" class="d-block w-100" alt="...">
-    </div>
+<!-- Welcome Banner -->
+<section class="welcome-banner">
+  <div class="welcome-banner__content">
+    <h1 class="welcome-banner__title">Bem-vindo(a) ao Helpr</h1>
+    <p class="welcome-banner__subtitle">
+      Gerencie seus chamados, clientes e tecnicos em um so lugar.
+    </p>
   </div>
-  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Previous</span>
-  </button>
-  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Next</span>
-  </button>
-</div>
-<div>
-  <div>
-    <h1 style="text-align:center"> <strong>Bem vindo(a) ao Helpr!</strong></h1>
-    <div class="container">
-      <p style="text-align: justify;">
-        Somos líderes atendendo as maiores empresas do setor como: Tecnologia, Telecomunicações, Serviços
-        Bancários/Financeiros, Saúde, Varejo, Governamental, Serviços, entre outros.
-        O cliente está no centro de tudo o que fazemos. Procuramos proativamente fornecer o melhor serviço para nossos
-        clientes e agregar valor. Nossos clientes são os juízes finais do nosso desempenho.
-        O conhecimento é nosso diferencial: combinamos tecnologia de dados e ferramentas digitais com nossa vasta
-        experiência em relacionamento com o consumidor para fornecer insights valiosos para cada etapa da jornada do
-        cliente final, tornando as experiências mais valiosas para consumidores e empresas.
+  <img src="assets/img/helpr-white-logo.png" alt="Helpr" class="welcome-banner__logo" />
+</section>
+
+<!-- Stats Dashboard -->
+<section class="stats" *ngIf="stats$ | async as stats">
+  <h2 class="section-title">Resumo de Chamados</h2>
+  <div class="stats__grid">
+    <a routerLink="/chamados" class="stat-card">
+      <div class="stat-card__icon-wrap stat-card__icon-wrap--neutral">
+        <mat-icon>assignment</mat-icon>
+      </div>
+      <div class="stat-card__body">
+        <span class="stat-card__value">{{ stats.total }}</span>
+        <span class="stat-card__label">Total</span>
+      </div>
+    </a>
+    <a routerLink="/chamados" class="stat-card">
+      <div class="stat-card__icon-wrap stat-card__icon-wrap--info">
+        <mat-icon>pending_actions</mat-icon>
+      </div>
+      <div class="stat-card__body">
+        <span class="stat-card__value stat-card__value--info">{{ stats.abertos }}</span>
+        <span class="stat-card__label">Abertos</span>
+      </div>
+    </a>
+    <a routerLink="/chamados" class="stat-card">
+      <div class="stat-card__icon-wrap stat-card__icon-wrap--warning">
+        <mat-icon>autorenew</mat-icon>
+      </div>
+      <div class="stat-card__body">
+        <span class="stat-card__value stat-card__value--warning">{{ stats.andamento }}</span>
+        <span class="stat-card__label">Em andamento</span>
+      </div>
+    </a>
+    <a routerLink="/chamados" class="stat-card">
+      <div class="stat-card__icon-wrap stat-card__icon-wrap--success">
+        <mat-icon>check_circle</mat-icon>
+      </div>
+      <div class="stat-card__body">
+        <span class="stat-card__value stat-card__value--success">{{ stats.encerrados }}</span>
+        <span class="stat-card__label">Encerrados</span>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- Quick Actions -->
+<section class="quick-actions">
+  <h2 class="section-title">Acoes Rapidas</h2>
+  <div class="quick-actions__grid">
+    <a
+      *ngFor="let action of quickActions"
+      [routerLink]="action.route"
+      class="action-card"
+    >
+      <mat-icon class="action-card__icon">{{ action.icon }}</mat-icon>
+      <span class="action-card__label">{{ action.label }}</span>
+      <mat-icon class="action-card__arrow">arrow_forward</mat-icon>
+    </a>
+  </div>
+</section>
+
+<!-- About Section -->
+<section class="about">
+  <div class="about__card">
+    <div class="about__visual">
+      <img src="assets/img/helpr-large-white-logo.png" alt="Helpr" class="about__logo" />
+    </div>
+    <div class="about__content">
+      <h2 class="about__title">Sobre o Helpr</h2>
+      <p>
+        Somos lideres atendendo as maiores empresas do setor como: Tecnologia, Telecomunicacoes, Servicos
+        Bancarios/Financeiros, Saude, Varejo, Governamental, Servicos, entre outros.
+      </p>
+      <p>
+        O cliente esta no centro de tudo o que fazemos. Procuramos proativamente fornecer o melhor servico para nossos
+        clientes e agregar valor.
       </p>
     </div>
   </div>
-</div>
-<div style="text-align:center">
+</section>
 
-  <div class="container">
-    <div class="row">
-      <div class="col-12 col-sm-6">
-        <img src="https://raw.githubusercontent.com/victoricoma/helpr/main/img/logoHorizontal/1.png" alt="" class="banner4">
+<!-- Features -->
+<section class="features">
+  <div class="features__grid">
+    <div class="feature-card">
+      <div class="feature-card__icon-wrap">
+        <mat-icon>security</mat-icon>
       </div>
-      <div class="col col-12 col-sm-6">
-        <div style="margin-top: 2%;">
-          <h1> <strong>Missão e Valores</strong></h1>
-          <div style="text-align:justify">
-          </div>
-          <p style="text-align: justify;">
-            Contribuir para o sucesso das empresas garantindo a melhor experiência aos seus consumidores finais.
-            Tornar-se o principal fornecedor de soluções de atendimento ao cliente em nossos mercados.
-            Acreditamos que um modelo de governança específico e customizado, visando atender plenamente às expectativas
-            dos nossos clientes, é fundamental para o sucesso da gestão de infraestrutura de TI. Para atender a esses
-            requerimentos, o Helpr se utiliza das melhores práticas de mercado, tais como ITIL e CoBIT, mas sempre
-            adaptando os processos, controles e direitos decisórios à realidade de cada cliente.
-          </p>
-        </div>
-      </div>
-    </div>
-
-  </div>
-  <div class="container">
-    <div class="row">
-      <div class="col-12 col-sm-6">
-        <h1 style="text-align:center"><strong>Gerenciamento de Ambientes</strong>
-        </h1>
-        <p style="text-align: justify;">Os serviços de gerenciamento de ambientes da TIVIT se diferenciam por entender a
-          criticidade dos serviços de TI
-          para os negócios dos nossos clientes. Os ambientes podem estar hospedados nos Data Centers da TIVIT, do
-          cliente
-          ou mesmo de terceiros. Com larga experiência em operações de missão crítica, adotamos uma postura transparente
-          e
-          proativa, com foco na prevenção de falhas, aumento da disponibilidade e garantia da performance das
-          aplicações.
-          Aliamos o conhecimento técnico de profissionais especializados nas disciplinas e tecnologias mais relevantes,
-          com as melhores práticas de mercado em gestão de serviços de TI, sempre aderentes à realidade e requerimentos
-          de
-          cada cliente ou unidade de negócio.
-        </p>
-      </div>
-      <div class="col-12 col-sm-6">
-        <img class="banner5" src="https://raw.githubusercontent.com/victoricoma/helpr/main/img/insideBanner/1.png" alt="">
-      </div>
-    </div>
-  </div>
-
-  <div>
-    <img class="banner6" src="https://raw.githubusercontent.com/victoricoma/helpr/main/img/outsiteBanner/3.png" alt="">
-  </div>
-
-
-  <footer>
-    <div class="footer1">
-      <p><strong>Contatos:</strong><br>
-        Rua dos Alfeneiros, n4 <br>
-        Telefone: (11)4234-6789 <br>
-        Email: contato@helpr.com <br>
+      <h3 class="feature-card__title">Governanca</h3>
+      <p class="feature-card__desc">
+        Modelo de governanca customizado, utilizando as melhores praticas de mercado como ITIL e CoBIT.
       </p>
     </div>
-    <div class="text-center">
-      <p class="footer">© 2022 Copyright</p>
+    <div class="feature-card">
+      <div class="feature-card__icon-wrap">
+        <mat-icon>insights</mat-icon>
+      </div>
+      <h3 class="feature-card__title">Insights</h3>
+      <p class="feature-card__desc">
+        Combinamos tecnologia de dados e ferramentas digitais para fornecer insights valiosos em cada etapa.
+      </p>
     </div>
-  </footer>
+    <div class="feature-card">
+      <div class="feature-card__icon-wrap">
+        <mat-icon>dns</mat-icon>
+      </div>
+      <h3 class="feature-card__title">Ambientes</h3>
+      <p class="feature-card__desc">
+        Gerenciamento de ambientes com foco na prevencao de falhas, disponibilidade e performance.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="home-footer">
+  <p class="home-footer__copy">&copy; 2024 Helpr - Todos os direitos reservados</p>
+</footer>

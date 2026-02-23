@@ -1,0 +1,37 @@
+// ============================================================
+// Custom Angular Material theme (replaces prebuilt deeppurple-amber)
+// ============================================================
+
+@use '@angular/material' as mat;
+
+@include mat.core();
+
+$helpr-primary: mat.define-palette(mat.$deep-purple-palette, 500, 300, 700);
+$helpr-accent: mat.define-palette(mat.$amber-palette, 500, 300, 700);
+$helpr-warn: mat.define-palette(mat.$red-palette);
+
+$helpr-theme: mat.define-light-theme((
+  color: (
+    primary: $helpr-primary,
+    accent: $helpr-accent,
+    warn: $helpr-warn,
+  ),
+  typography: mat.define-typography-config(
+    $font-family: 'Inter, Roboto, Helvetica Neue, sans-serif',
+  ),
+  density: 0,
+));
+
+@include mat.all-component-themes($helpr-theme);
+
+// --- Overrides (tokens) ---
+.mat-mdc-dialog-container .mdc-dialog__surface,
+.mat-dialog-container {
+  border-radius: var(--radius-xl) !important;
+  max-width: 560px;
+}
+
+.dialog-rounded .mat-mdc-dialog-container .mdc-dialog__surface,
+.dialog-rounded .mat-dialog-container {
+  border-radius: var(--radius-xl) !important;
+}

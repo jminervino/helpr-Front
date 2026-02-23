@@ -1,0 +1,103 @@
+// ============================================================
+// Global layout and interaction rules (forms, tables, scroll, FAB)
+// ============================================================
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.form-wrapper {
+  padding: var(--space-4);
+}
+
+table {
+  width: 100%;
+}
+
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.page-header {
+  margin: 0 0 var(--page-padding-y);
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-semibold);
+}
+
+.page-content {
+  margin: 0;
+}
+
+// --- Interactions: focus, buttons, table rows ---
+button,
+a[href],
+.mat-button,
+.mat-raised-button,
+.mat-flat-button,
+.mat-icon-button,
+.mat-fab,
+.mat-mini-fab {
+  transition: background-color var(--transition-fast), color var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+
+button:focus-visible,
+a[href]:focus-visible,
+.mat-button:focus-visible,
+.mat-raised-button:focus-visible,
+.mat-flat-button:focus-visible,
+.mat-icon-button:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+tr.mat-row:hover,
+tr.mat-mdc-row:hover {
+  background-color: rgba(0, 0, 0, var(--hover-opacity));
+}
+
+// --- Scroll: sidenav content scrolls, not body ---
+.sidenav-container mat-sidenav-content {
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 100vh;
+}
+
+.mat-toolbar.mat-primary {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  height: var(--topbar-height);
+}
+
+.page-fab {
+  position: fixed;
+  bottom: var(--space-6);
+  right: var(--space-6);
+  z-index: 1;
+}
+
+// --- Grid (replaces Bootstrap .container/.row/.col-*) ---
+.grid-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-8);
+}
+
+@media (max-width: 599px) {
+  .grid-2col {
+    grid-template-columns: 1fr;
+  }
+}
+
+// --- Text alignment (replaces Bootstrap .text-center, .text-justify) ---
+.text-center {
+  text-align: center;
+}
+
+.text-justify {
+  text-align: justify;
+}

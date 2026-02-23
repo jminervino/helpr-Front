@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { HotToastService } from '@ngneat/hot-toast';
 import { Cliente } from 'src/app/core/models/pessoa';
 import { ClientesService } from 'src/app/core/services/clientes/clientes.service';
-import { profileChecked, someTrue, trueIndexes } from 'src/app/shared/utils';
+import { profileChecked, someTrue, selectedPerfils } from 'src/app/shared/utils';
 import { Subject, takeUntil } from 'rxjs';
 
 @Component({
@@ -40,7 +40,7 @@ export class ClienteUpdateComponent implements OnInit, OnDestroy {
   onSubmit() {
     const cliente = {
       ...this.clienteForm.value,
-      perfils: trueIndexes(((this.clienteForm.value.perfils ?? []) as (boolean | null)[]).map((value) => !!value)),
+      perfils: selectedPerfils(((this.clienteForm.value.perfils ?? []) as (boolean | null)[]).map((value) => !!value)),
     } as Cliente;
     
     const ref = this.toast.loading('Atualizando cliente');

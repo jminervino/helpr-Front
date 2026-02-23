@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { HotToastService } from '@ngneat/hot-toast';
 import { Tecnico } from 'src/app/core/models/pessoa';
 import { TecnicosService } from 'src/app/core/services/tecnicos/tecnicos.service';
-import { someTrue, trueIndexes, profileChecked } from 'src/app/shared/utils';
+import { someTrue, selectedPerfils, profileChecked } from 'src/app/shared/utils';
 import { Subject, takeUntil } from 'rxjs';
 
 @Component({
@@ -40,7 +40,7 @@ export class TecnicoUpdateComponent implements OnInit, OnDestroy {
   onSubmit() {
     const tecnico = {
       ...this.tecnicoForm.value,
-      perfils: trueIndexes(((this.tecnicoForm.value.perfils ?? []) as (boolean | null)[]).map((value) => !!value)),
+      perfils: selectedPerfils(((this.tecnicoForm.value.perfils ?? []) as (boolean | null)[]).map((value) => !!value)),
     } as Tecnico;
     
     const ref = this.toast.loading('Atualizando tecnico');

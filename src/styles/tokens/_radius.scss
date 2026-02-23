@@ -1,0 +1,12 @@
+// ============================================================
+// Design System - Border Radius Tokens
+// ============================================================
+
+:root {
+  --radius-none: 0;
+  --radius-sm: 0.25rem;   //  4px - chips, badges
+  --radius-md: 0.5rem;    //  8px - buttons, inputs, cards
+  --radius-lg: 0.75rem;   // 12px - dialogs, larger cards
+  --radius-xl: 1rem;      // 16px - modals, panels
+  --radius-full: 9999px;  // Pill shape (FAB, avatar)
+}

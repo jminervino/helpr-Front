@@ -1,0 +1,28 @@
+// ============================================================
+// Detail view card (chamado/cliente/tecnico detail)
+// ============================================================
+
+.detail-card {
+  max-width: 560px;
+  padding: var(--card-padding);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-md);
+}
+
+.detail-card .mat-card-content p {
+  margin: var(--space-3) 0;
+  font-size: var(--font-size-sm);
+}
+
+.detail-card .mat-card-content strong {
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-secondary);
+  margin-right: var(--space-2);
+}
+
+.detail-card .mat-card-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-3);
+  padding-top: var(--space-4);
+}

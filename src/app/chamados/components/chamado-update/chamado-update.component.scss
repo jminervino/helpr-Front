@@ -1,42 +1,5 @@
-.container
-{
-  display: flex;
-  margin-left: 72%;
-  padding-top: 0px;
-  padding-bottom: 0px;
-}
-
-div.img {
-  background-image: url(https://github.com/victoricoma/helpr/blob/main/img/outsiteBanner/4.png?raw=true);
-  background-size: cover;
-  float: left;
-  width: 75%;
-  height: 89.5vh;
-}
-
-div#q1{
-  width: 65%;
-  background-position: center center;
-}
-
-form button {
-  width: 100%;
-}
-
-@media screen and (max-width: 900px) {
-  .reduction {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-  }
-
-  .container {
-  margin-left: 0px;
-  }
-
-  div.img{
-   background-image: none;
-   display: none;
-  }
-
+.error-message {
+  text-align: center;
+  color: var(--color-error-main);
+  padding: var(--space-8);
 }

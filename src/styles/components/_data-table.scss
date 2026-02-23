@@ -1,0 +1,62 @@
+// ============================================================
+// Data table container (single source for list pages)
+// ============================================================
+
+.data-table-container {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  background: var(--color-surface);
+}
+
+.data-table-container table {
+  width: 100%;
+  min-width: 600px;
+}
+
+.data-table-container tr.mat-header-row {
+  background: var(--color-primary-900);
+}
+
+.data-table-container th.mat-header-cell {
+  background: var(--color-primary-900);
+  color: var(--color-text-inverse);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: var(--letter-spacing-wide);
+  padding: var(--space-3) var(--space-4);
+  min-width: 100px;
+}
+
+.data-table-container th.col-id {
+  min-width: 30px;
+}
+
+.data-table-container tr.mat-row {
+  background-color: var(--color-surface);
+}
+
+.data-table-container tr.mat-row:nth-child(even) {
+  background-color: var(--color-neutral-50);
+}
+
+.data-table-container tr.mat-row:hover {
+  background-color: var(--color-surface-hover);
+  transition: background-color var(--transition-fast);
+}
+
+.data-table-container td.mat-cell {
+  font-size: var(--font-size-sm);
+  padding: var(--space-3) var(--space-4);
+  color: var(--color-text-primary);
+}
+
+.data-table-container .table-responsive {
+  overflow-x: auto;
+}
+
+.data-table-container .actions-cell {
+  display: flex;
+  gap: var(--space-1);
+  justify-content: flex-end;
+}

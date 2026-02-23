@@ -1,0 +1,13 @@
+// ============================================================
+// Minimal reset – replaces ad-hoc global styles
+// ============================================================
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-family-primary);
+}

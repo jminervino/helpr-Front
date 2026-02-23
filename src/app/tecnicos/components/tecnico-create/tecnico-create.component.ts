@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { HotToastService } from '@ngneat/hot-toast';
 import { Tecnico } from 'src/app/core/models/pessoa';
 import { TecnicosService } from 'src/app/core/services/tecnicos/tecnicos.service';
-import { someTrue, trueIndexes } from 'src/app/shared/utils';
+import { someTrue, selectedPerfils } from 'src/app/shared/utils';
 
 @Component({
   selector: 'app-tecnico-create',
@@ -30,7 +30,7 @@ export class TecnicoCreateComponent implements OnInit {
   onSubmit() {
     const tecnico = {
       ...this.tecnicoForm.value,
-      perfils: trueIndexes(((this.tecnicoForm.value.perfils ?? []) as (boolean | null)[]).map((value) => !!value)),
+      perfils: selectedPerfils(((this.tecnicoForm.value.perfils ?? []) as (boolean | null)[]).map((value) => !!value)),
     } as Tecnico;
 
     const ref = this.toast.loading('Adicionando tecnico');

@@ -1,8 +1,13 @@
-    <h1 mat-dialog-title>ATENÇÂO...</h1>
-    <div mat-dialog-content>
-        <p>Você Deseja Realmente Sair?</p>
-    </div>
-    <div mat-dialog-actions>
-        <button mat-button type="warn" (click)="cancel()">Não</button>
-        <button mat-button type="primary" (click)="next()">Sim</button>
-    </div>
+<div class="logout-dialog">
+  <div class="logout-dialog__icon-wrap">
+    <mat-icon class="logout-dialog__icon">logout</mat-icon>
+  </div>
+  <h2 class="logout-dialog__title">Encerrar sessao?</h2>
+  <p class="logout-dialog__message">
+    Voce sera desconectado e precisara fazer login novamente para acessar o sistema.
+  </p>
+  <div class="logout-dialog__actions">
+    <button mat-stroked-button class="logout-dialog__btn-cancel" (click)="cancel()">Cancelar</button>
+    <button mat-flat-button color="warn" class="logout-dialog__btn-confirm" (click)="next()">Sair</button>
+  </div>
+</div>

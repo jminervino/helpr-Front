@@ -3,6 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HotToastService } from '@ngneat/hot-toast';
 import { EMPTY, Observable } from 'rxjs';
+import { Prioridade, Status } from 'src/app/core/models/chamado';
 import { Cliente, Tecnico } from 'src/app/core/models/pessoa';
 import { ChamadosService } from 'src/app/core/services/chamados/chamados.service';
 import { ClientesService } from 'src/app/core/services/clientes/clientes.service';
@@ -18,8 +19,8 @@ export class ChamadoCreateComponent implements OnInit {
   tecnicos$: Observable<Tecnico[]> = EMPTY;
 
   chamadoForm = this.fb.group({
-    prioridade: [null as number | null, [Validators.required]],
-    status: [null as number | null, [Validators.required]],
+    prioridade: [null as string | null, [Validators.required]],
+    status: [null as string | null, [Validators.required]],
     titulo: [null as string | null, [Validators.required]],
     observacoes: [null as string | null, [Validators.required]],
     tecnico: [null as number | null, [Validators.required]],
@@ -37,8 +38,8 @@ export class ChamadoCreateComponent implements OnInit {
 
   onSubmit() {
     const chamado = this.chamadoForm.getRawValue() as {
-      prioridade: number;
-      status: number;
+      prioridade: Prioridade;
+      status: Status;
       titulo: string;
       observacoes: string;
       tecnico: number;

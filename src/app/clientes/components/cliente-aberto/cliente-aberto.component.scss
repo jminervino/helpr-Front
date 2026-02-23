@@ -4,10 +4,10 @@
 }
 table th {
   height: 60px;
-  background: #36304a;
-  color: #fff;
-  font-size: 18px;
+  background: var(--color-primary-900);
+  color: var(--color-text-inverse);
+  font-size: var(--font-size-md);
 }
 tr:nth-child(even) {
-  background:lightgray;
+  background: var(--color-neutral-300);
 }

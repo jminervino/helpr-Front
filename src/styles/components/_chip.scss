@@ -1,0 +1,44 @@
+// ============================================================
+// Unified chip (status / priority) - light bg + dark text
+// ============================================================
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 80px;
+  height: 24px;
+  padding: 0 var(--space-2);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: var(--letter-spacing-wide);
+  text-transform: uppercase;
+  white-space: nowrap;
+  margin: 0;
+}
+
+.chip--success {
+  background-color: var(--color-success-light);
+  color: var(--color-success-dark);
+}
+
+.chip--warning {
+  background-color: var(--color-warning-light);
+  color: var(--color-warning-dark);
+}
+
+.chip--error {
+  background-color: var(--color-error-light);
+  color: var(--color-error-dark);
+}
+
+.chip--info {
+  background-color: var(--color-info-light);
+  color: var(--color-info-dark);
+}
+
+.chip--neutral {
+  background-color: var(--color-neutral-200);
+  color: var(--color-neutral-700);
+}

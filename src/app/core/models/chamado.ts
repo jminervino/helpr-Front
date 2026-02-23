@@ -13,13 +13,13 @@ export interface Chamado {
 }
 
 export enum Status {
-  ABERTO,
-  ANDAMENTO,
-  ENCERRADO,
+  ABERTO = 'ABERTO',
+  ANDAMENTO = 'ANDAMENTO',
+  ENCERRADO = 'ENCERRADO',
 }
 
 export enum Prioridade {
-  BAIXA,
-  MEDIA,
-  ALTA,
+  BAIXA = 'BAIXA',
+  MEDIA = 'MEDIA',
+  ALTA = 'ALTA',
 }
