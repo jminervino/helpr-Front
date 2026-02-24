@@ -37,7 +37,7 @@ Interface web construída com Angular 14 e Angular Material
 
 O **Helpr** é um sistema de gestão de chamados técnicos desenvolvido como POC (Proof of Concept) durante o bootcamp BCW18 da Soul Code Academy. A aplicação permite o cadastro e gerenciamento de técnicos, clientes e chamados de suporte, com controle de acesso baseado em papéis (ADMIN, TÉCNICO, CLIENTE).
 
-Este repositório contém o **frontend Angular**, que se comunica com uma [API REST Spring Boot](./helpr).
+Este repositório contém o **frontend Angular**, que se comunica com uma [API REST Spring Boot](https://github.com/jminervino/helpr).
 
 ---
 
@@ -216,7 +216,7 @@ export const environment = {
 
 ### 4. Suba o backend
 
-O frontend depende da [API Spring Boot](./helpr). Certifique-se de que ela está rodando em `localhost:8080`.
+O frontend depende da [API Spring Boot](https://github.com/jminervino/helpr). Certifique-se de que ela está rodando em `localhost:8080`.
 
 ### 5. Inicie a aplicação
 
@@ -419,4 +419,4 @@ A aplicação tem suporte a PWA configurado via Angular Service Worker. O Servic
 
 ## Projeto Relacionado
 
-- **Backend (Spring Boot):** [`helpr/`](./helpr) — API REST com autenticação JWT e banco de dados MySQL
+- **Backend (Spring Boot):** [github.com/jminervino/helpr](https://github.com/jminervino/helpr) — API REST com autenticação JWT e banco de dados MySQL
