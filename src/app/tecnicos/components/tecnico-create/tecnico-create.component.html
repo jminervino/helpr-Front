@@ -29,10 +29,13 @@
       </mat-form-field>
       <mat-form-field appearance="fill">
         <mat-label>Senha</mat-label>
-        <input matInput placeholder="Senha do tecnico" formControlName="senha" type="password" required />
+        <input matInput [type]="ocultar ? 'password' : 'text'" placeholder="Senha do tecnico" formControlName="senha" required />
+        <mat-icon matPrefix>key</mat-icon>
+        <button type="button" mat-icon-button matSuffix (click)="ocultar = !ocultar" [attr.aria-label]="'Mostrar/ocultar senha'">
+          <mat-icon>{{ ocultar ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
         <mat-error *ngIf="tecnicoForm.get('senha')?.errors?.['required']">Campo obrigatório</mat-error>
         <mat-error *ngIf="tecnicoForm.get('senha')?.errors?.['minlength']">O mínimo são 8 caracteres</mat-error>
-        <mat-icon matPrefix>key</mat-icon>
       </mat-form-field>
     <span class="mat-error" *ngIf="tecnicoForm.get('perfils')?.errors?.['sometrue']">
       Marque pelo menos uma função para o usuário

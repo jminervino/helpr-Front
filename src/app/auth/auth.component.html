@@ -52,10 +52,10 @@
           mat-flat-button
           color="primary"
           class="login-form__submit"
-          [disabled]="loginForm.invalid"
+          [disabled]="loginForm.invalid || loading"
           type="submit"
         >
-          Entrar
+          {{ loading ? 'Entrando...' : 'Entrar' }}
         </button>
       </form>
 

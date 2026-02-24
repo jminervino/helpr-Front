@@ -19,6 +19,8 @@ export class TecnicoCreateComponent implements OnInit {
     perfils: this.fb.array([[false], [false], [true]], [someTrue]),
   });
 
+  ocultar = true;
+
   constructor(
     private fb: FormBuilder,
     private tecnicosService: TecnicosService,

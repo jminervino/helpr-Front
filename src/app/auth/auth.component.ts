@@ -26,10 +26,13 @@ export class AuthComponent implements OnInit {
   });
 
   ocultar = true;
+  loading = false;
 
   onSubmit() {
-    const { email, senha } = this.loginForm.getRawValue();
+    if (this.loading) return;
+    this.loading = true;
 
+    const { email, senha } = this.loginForm.getRawValue();
     const ref = this.toast.loading('Fazendo login...');
 
     this.authService.login(email, senha).pipe(
@@ -39,13 +42,14 @@ export class AuthComponent implements OnInit {
       })
     ).subscribe({
       next: () => {
+        this.loading = false;
         ref.close();
         this.router.navigate(['/']);
         this.toast.success('Seja bem-vindo(a)!');
-        // Carrega o role em background — não bloqueia a navegação
         this.authService.loadUserRole().subscribe();
       },
       error: () => {
+        this.loading = false;
         window.navigator?.vibrate?.(200);
         ref.close();
         this.toast.error('Email/senha inválido(s)');

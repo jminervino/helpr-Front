@@ -6,12 +6,13 @@ import {
   HttpRequest,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { HotToastService } from '@ngneat/hot-toast';
 import { Observable, catchError, throwError } from 'rxjs';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
-  constructor(private toast: HotToastService) {}
+  constructor(private toast: HotToastService, private router: Router) {}
 
   intercept(
     req: HttpRequest<any>,
@@ -20,6 +21,12 @@ export class ErrorInterceptor implements HttpInterceptor {
     return next.handle(req).pipe(
       catchError((error: HttpErrorResponse) => {
         switch (error.status) {
+          case 401:
+            // Token inválido ou expirado — limpa sessão e redireciona para login
+            localStorage.removeItem('token');
+            this.router.navigate(['/auth']);
+            this.toast.error('Sessao expirada. Faca login novamente.');
+            break;
           case 403:
             if (req.method === 'POST' && req.url.includes('/service/clientes')) {
               this.toast.error('Apenas tecnicos ou administradores podem criar clientes.');

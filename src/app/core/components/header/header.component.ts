@@ -32,10 +32,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   @ViewChild('drawer') drawer!: MatSidenav;
   private destroy$ = new Subject<void>();
 
-  sidebarOpen = false;
   pageTitle = 'Pagina Inicial';
   isFullscreen = false;
-  notificationCount = 0;
 
   isHandset$: Observable<boolean> = this.breakpointObserver
     .observe(Breakpoints.Handset)
@@ -83,11 +81,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   toggleDrawer(): void {
-    this.sidebarOpen = !this.sidebarOpen;
+    this.drawer.toggle();
   }
 
   closeDrawer(): void {
-    this.sidebarOpen = false;
+    if (this.drawer.mode === 'over') {
+      this.drawer.close();
+    }
   }
 
   toggleFullscreen(): void {
