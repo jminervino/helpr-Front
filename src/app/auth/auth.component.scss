@@ -4,35 +4,154 @@
 }
 
 // ---------------------------------------------------------------------------
-// Login Page - Split Layout
+// Layout
 // ---------------------------------------------------------------------------
 .login-page {
   display: flex;
   min-height: 100%;
 }
 
-// --- Left: Banner Panel ---
+// ---------------------------------------------------------------------------
+// Left — Brand panel
+// ---------------------------------------------------------------------------
 .login-brand {
   flex: 1;
-  min-width: 0;
+  position: relative;
   display: flex;
-  align-items: stretch;
-  justify-content: stretch;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
 
   @media (max-width: 900px) {
     display: none;
   }
 }
 
-.login-brand__banner {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  display: block;
+.login-brand__bg {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg,
+    var(--color-primary-900) 0%,
+    var(--color-primary-700) 55%,
+    var(--color-primary-500) 100%
+  );
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 70% 60% at 110% 50%, rgba(255,255,255,0.06) 0%, transparent 70%),
+      radial-gradient(ellipse at -10% 90%, rgba(103,58,183,0.45) 0%, transparent 55%);
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: -80px;
+    right: -80px;
+    width: 360px;
+    height: 360px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%);
+  }
 }
 
-// --- Right: Form Panel ---
+.login-brand__content {
+  position: relative;
+  z-index: 1;
+  padding: var(--space-12) var(--space-10);
+  color: var(--color-text-inverse);
+  max-width: 480px;
+}
+
+.login-brand__logo {
+  display: block;
+  height: 72px;
+  width: auto;
+  object-fit: contain;
+  margin-bottom: var(--space-10);
+}
+
+.login-brand__title {
+  margin: 0 0 var(--space-4);
+  font-size: 2.4rem;
+  font-weight: var(--font-weight-bold);
+  line-height: 1.15;
+  letter-spacing: var(--letter-spacing-tight);
+}
+
+.login-brand__highlight {
+  background: linear-gradient(135deg, var(--color-accent-300) 0%, var(--color-accent-500) 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.login-brand__sub {
+  margin: 0 0 var(--space-10);
+  font-size: var(--font-size-md);
+  opacity: 0.75;
+  line-height: var(--line-height-relaxed);
+}
+
+.login-brand__features {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  margin-bottom: var(--space-12);
+}
+
+.login-brand__feat {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  font-size: var(--font-size-sm);
+  opacity: 0.9;
+}
+
+.login-brand__feat-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(8px);
+
+  mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+  }
+}
+
+.login-brand__back {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--font-size-xs);
+  color: rgba(255, 255, 255, 0.55);
+  text-decoration: none;
+  transition: color 0.2s;
+
+  mat-icon {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+  }
+
+  &:hover {
+    color: rgba(255, 255, 255, 0.9);
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Right — Form panel
+// ---------------------------------------------------------------------------
 .login-form-panel {
   display: flex;
   align-items: center;
@@ -67,10 +186,10 @@
 
 .login-card__logo-mobile {
   display: none;
-  width: 56px;
-  height: 56px;
+  width: 64px;
+  height: 64px;
   object-fit: contain;
-  margin: 0 auto var(--space-4);
+  margin: 0 auto var(--space-5);
 
   @media (max-width: 900px) {
     display: block;
@@ -88,6 +207,7 @@
   margin: 0;
   font-size: var(--font-size-sm);
   color: var(--color-text-secondary);
+  line-height: var(--line-height-relaxed);
 }
 
 // --- Form ---
@@ -108,6 +228,10 @@
   font-size: var(--font-size-base);
   font-weight: var(--font-weight-semibold);
   letter-spacing: var(--letter-spacing-wide);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
 }
 
 // --- Footer ---

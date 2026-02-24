@@ -2,28 +2,92 @@
 <section class="hero">
   <div class="hero__bg"></div>
   <div class="hero__content">
-    <div class="hero__badge">
-      <mat-icon>rocket_launch</mat-icon>
-      <span>Plataforma de Helpdesk</span>
+
+    <!-- Left: text -->
+    <div class="hero__left">
+      <img src="assets/img/helpr-large-white-logo.png" alt="Helpr Manager" class="hero__logo" />
+      <div class="hero__badge">
+        <mat-icon>rocket_launch</mat-icon>
+        <span>Plataforma de Helpdesk</span>
+      </div>
+      <h1 class="hero__title">
+        Gerencie seus chamados<br />
+        com <span class="hero__highlight">simplicidade</span>
+      </h1>
+      <p class="hero__subtitle">
+        Helpr é uma plataforma completa de gestão de chamados, clientes e técnicos.
+        Construída com Angular, Material Design e as melhores práticas de desenvolvimento.
+      </p>
+      <div class="hero__actions">
+        <a mat-flat-button color="primary" routerLink="/auth" class="hero__btn hero__btn--primary">
+          <mat-icon>login</mat-icon>
+          Acessar Plataforma
+        </a>
+        <a mat-stroked-button class="hero__btn hero__btn--outline" href="#features">
+          <mat-icon>arrow_downward</mat-icon>
+          Conhecer Recursos
+        </a>
+      </div>
     </div>
-    <h1 class="hero__title">
-      Gerencie seus chamados<br />
-      com <span class="hero__highlight">simplicidade</span>
-    </h1>
-    <p class="hero__subtitle">
-      Helpr e uma plataforma completa de gestao de chamados, clientes e tecnicos.
-      Construida com Angular, Material Design e as melhores praticas de desenvolvimento.
-    </p>
-    <div class="hero__actions">
-      <a mat-flat-button color="primary" routerLink="/auth" class="hero__btn hero__btn--primary">
-        <mat-icon>login</mat-icon>
-        Acessar Plataforma
-      </a>
-      <a mat-stroked-button class="hero__btn hero__btn--outline" href="#features">
-        <mat-icon>arrow_downward</mat-icon>
-        Conhecer Recursos
-      </a>
+
+    <!-- Right: mockup -->
+    <div class="hero__right">
+      <div class="hero__mockup">
+
+        <!-- Window chrome -->
+        <div class="mockup__bar">
+          <div class="mockup__dots">
+            <span class="mockup__dot mockup__dot--red"></span>
+            <span class="mockup__dot mockup__dot--yellow"></span>
+            <span class="mockup__dot mockup__dot--green"></span>
+          </div>
+          <span class="mockup__bar-title">Helpr — Dashboard</span>
+        </div>
+
+        <!-- Stats -->
+        <div class="mockup__stats">
+          <div class="mockup__stat mockup__stat--aberto">
+            <span class="mockup__stat-num">12</span>
+            <span class="mockup__stat-lbl">Abertos</span>
+          </div>
+          <div class="mockup__stat mockup__stat--andamento">
+            <span class="mockup__stat-num">5</span>
+            <span class="mockup__stat-lbl">Andamento</span>
+          </div>
+          <div class="mockup__stat mockup__stat--encerrado">
+            <span class="mockup__stat-num">48</span>
+            <span class="mockup__stat-lbl">Encerrados</span>
+          </div>
+        </div>
+
+        <!-- Ticket list -->
+        <div class="mockup__list">
+          <div class="mockup__item">
+            <div class="mockup__item-info">
+              <span class="mockup__item-title">Servidor fora do ar</span>
+              <span class="mockup__item-sub">Técnico: João Silva</span>
+            </div>
+            <span class="mockup__badge mockup__badge--alta">ALTA</span>
+          </div>
+          <div class="mockup__item">
+            <div class="mockup__item-info">
+              <span class="mockup__item-title">Erro no sistema de login</span>
+              <span class="mockup__item-sub">Técnico: Maria Souza</span>
+            </div>
+            <span class="mockup__badge mockup__badge--media">MÉDIA</span>
+          </div>
+          <div class="mockup__item">
+            <div class="mockup__item-info">
+              <span class="mockup__item-title">Atualização de senha</span>
+              <span class="mockup__item-sub">Técnico: Carlos Lima</span>
+            </div>
+            <span class="mockup__badge mockup__badge--baixa">BAIXA</span>
+          </div>
+        </div>
+
+      </div>
     </div>
+
   </div>
 </section>
 
@@ -42,9 +106,9 @@
   <div class="section-container">
     <div class="section-header">
       <span class="section-tag">Recursos</span>
-      <h2 class="section-title">Tudo que voce precisa em um so lugar</h2>
+      <h2 class="section-title">Tudo que você precisa em um só lugar</h2>
       <p class="section-subtitle">
-        Uma plataforma completa para gerenciamento de chamados de suporte tecnico.
+        Uma plataforma completa para gerenciamento de chamados de suporte técnico.
       </p>
     </div>
     <div class="features__grid">
@@ -86,7 +150,7 @@
       <span class="section-tag">Tecnologias</span>
       <h2 class="section-title">Stack Moderna</h2>
       <p class="section-subtitle">
-        Desenvolvido com as tecnologias mais utilizadas no mercado.
+        Desenvolvido com as tecnologias mais utilizadas no mercado de desenvolvimento web.
       </p>
     </div>
     <div class="tech-stack__grid">
@@ -100,7 +164,7 @@
 <!-- CTA Section -->
 <section class="cta">
   <div class="cta__content">
-    <h2 class="cta__title">Pronto para comecar?</h2>
+    <h2 class="cta__title">Pronto para começar?</h2>
     <p class="cta__subtitle">Acesse a plataforma e experimente todos os recursos.</p>
     <a mat-flat-button routerLink="/auth" class="cta__btn">
       <mat-icon>login</mat-icon>
@@ -116,6 +180,6 @@
       <img src="assets/img/logo.png" alt="Helpr" class="landing-footer__logo" />
       <span class="landing-footer__name">Helpr</span>
     </div>
-    <p class="landing-footer__copy">&copy; 2024 Helpr - Projeto de portfolio</p>
+    <p class="landing-footer__copy">&copy; 2026 Helpr — Projeto de portfólio</p>
   </div>
 </footer>

@@ -44,7 +44,7 @@ export class AuthComponent implements OnInit {
       next: () => {
         this.loading = false;
         ref.close();
-        this.router.navigate(['/']);
+        this.router.navigate(['/home']);
         this.toast.success('Seja bem-vindo(a)!');
         this.authService.loadUserRole().subscribe();
       },

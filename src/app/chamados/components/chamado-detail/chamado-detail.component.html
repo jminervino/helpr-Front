@@ -1,29 +1,109 @@
-<div *ngIf="!loading && !error; else loadingOrError">
-  <mat-card class="detail-card">
-    <mat-card-title>#{{ chamado.id }} {{ chamado.titulo }}</mat-card-title>
-    <mat-card-subtitle>
-      {{ chamado.nomeCliente }} | {{ chamado.dataAbertura }}
-    </mat-card-subtitle>
-    <mat-card-content>
-      <p><b>Observações:</b> {{ chamado.observacoes }}</p>
-      <p><b>Técnico:</b> {{ chamado.nomeTecnico }}</p>
-      <p *ngIf="chamado.dataFechamento">
-        <b>Fechou em:</b> {{ chamado.dataFechamento }}
-      </p>
-      <p>
-        <b>Prioridade:</b>
-        <app-prioridade-chip [prioridade]="chamado.prioridade">
-        </app-prioridade-chip>
-      </p>
-      <p>
-        <b>Status:</b>
-        <app-status-chip [status]="chamado.status"></app-status-chip>
-      </p>
-    </mat-card-content>
-  </mat-card>
-</div>
+<ng-container *ngIf="!loading && !error; else loadingOrError">
+
+  <app-page-header
+    title="Detalhes do chamado"
+    [subtitle]="'#' + chamado.id + ' · ' + chamado.nomeCliente"
+    actionLabel="Editar"
+    actionIcon="edit"
+    [actionRoute]="'/chamados/edit/' + chamado.id"
+  ></app-page-header>
+
+  <div class="cd-layout">
+
+    <!-- Hero Card -->
+    <div class="cd-hero" [ngClass]="heroStatusClass">
+      <div class="cd-hero__body">
+        <span class="cd-hero__id">#{{ chamado.id }}</span>
+        <h1 class="cd-hero__title">{{ chamado.titulo }}</h1>
+        <div class="cd-hero__chips">
+          <app-status-chip [status]="chamado.status"></app-status-chip>
+          <app-prioridade-chip [prioridade]="chamado.prioridade"></app-prioridade-chip>
+        </div>
+      </div>
+    </div>
+
+    <!-- Info Grid -->
+    <div class="cd-grid">
+
+      <!-- Observações -->
+      <div class="cd-panel">
+        <div class="cd-panel__header">
+          <mat-icon>description</mat-icon>
+          <span>Observações</span>
+        </div>
+        <p class="cd-panel__text">{{ chamado.observacoes }}</p>
+      </div>
+
+      <!-- Informações -->
+      <div class="cd-panel">
+        <div class="cd-panel__header">
+          <mat-icon>info_outline</mat-icon>
+          <span>Informações</span>
+        </div>
+        <div class="cd-info-list">
+
+          <div class="cd-info-row">
+            <mat-icon class="cd-info-row__icon">person</mat-icon>
+            <div class="cd-info-row__content">
+              <span class="cd-info-row__label">Cliente</span>
+              <span class="cd-info-row__value">{{ chamado.nomeCliente }}</span>
+            </div>
+          </div>
+
+          <div class="cd-info-row">
+            <mat-icon class="cd-info-row__icon">build</mat-icon>
+            <div class="cd-info-row__content">
+              <span class="cd-info-row__label">Técnico</span>
+              <span class="cd-info-row__value">{{ chamado.nomeTecnico }}</span>
+            </div>
+          </div>
+
+          <div class="cd-info-row">
+            <mat-icon class="cd-info-row__icon">event</mat-icon>
+            <div class="cd-info-row__content">
+              <span class="cd-info-row__label">Abertura</span>
+              <span class="cd-info-row__value">{{ chamado.dataAbertura }}</span>
+            </div>
+          </div>
+
+          <div class="cd-info-row" *ngIf="chamado.dataFechamento">
+            <mat-icon class="cd-info-row__icon">event_available</mat-icon>
+            <div class="cd-info-row__content">
+              <span class="cd-info-row__label">Fechamento</span>
+              <span class="cd-info-row__value">{{ chamado.dataFechamento }}</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Actions -->
+    <div class="cd-actions">
+      <a mat-stroked-button routerLink="/chamados">
+        <mat-icon>arrow_back</mat-icon>
+        Voltar aos chamados
+      </a>
+      <a mat-flat-button color="primary" [routerLink]="'/chamados/edit/' + chamado.id">
+        <mat-icon>edit</mat-icon>
+        Editar chamado
+      </a>
+    </div>
+
+  </div>
+
+</ng-container>
 
 <ng-template #loadingOrError>
-  <app-loader *ngIf="loading" label="Carregando chamado..."> </app-loader>
-  <p *ngIf="error">{{ errorMsg }}</p>
+  <app-loader *ngIf="loading" label="Carregando chamado..."></app-loader>
+
+  <div class="cd-error" *ngIf="error">
+    <mat-icon class="cd-error__icon">error_outline</mat-icon>
+    <p class="cd-error__msg">{{ errorMsg }}</p>
+    <a mat-stroked-button routerLink="/chamados">
+      <mat-icon>arrow_back</mat-icon>
+      Voltar aos chamados
+    </a>
+  </div>
 </ng-template>

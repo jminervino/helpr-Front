@@ -19,7 +19,7 @@ const ROUTE_TITLES: Record<string, string> = {
   '/chamados': 'Chamados',
   '/clientes': 'Clientes',
   '/tecnicos': 'Tecnicos',
-  '/admin': 'Administracao',
+
   '/manual-do-software': 'Manual do Software',
 };
 
@@ -59,9 +59,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     return this.authService.roleUser;
   }
 
-  get userAdmin() {
-    return this.authService.roleUser === 'Admin';
-  }
 
   ngOnInit(): void {
     this.tokenExpirationDate = this.authService.getTokenExpirationDate();

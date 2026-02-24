@@ -3,8 +3,8 @@ import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { Chamado } from 'src/app/core/models/chamado';
-import { Cliente, Tecnico } from 'src/app/core/models/pessoa';
 import { ChamadosService } from 'src/app/core/services/chamados/chamados.service';
+import { statusFromBackend } from 'src/app/shared/utils';
 
 @Component({
   selector: 'app-chamado-detail',
@@ -24,6 +24,11 @@ export class ChamadoDetailComponent implements OnInit, OnDestroy {
     private titleService: Title
     
   ) {}
+
+  get heroStatusClass(): string {
+    const s = statusFromBackend(this.chamado.status as any);
+    return 'cd-hero--' + s.toLowerCase();
+  }
 
   ngOnInit(): void {
     const id = this.route.snapshot.params['id'];

@@ -5,6 +5,7 @@ import { EMPTY, filter, Observable, Subject, switchMap, takeUntil } from 'rxjs';
 import { Tecnico } from '../core/models/pessoa';
 import { TecnicosService } from '../core/services/tecnicos/tecnicos.service';
 import { TecnicoDetailComponent } from './components/tecnico-detail/tecnico-detail.component';
+import { TecnicoAndamentoComponent } from './components/tecnico-andamento/tecnico-andamento.component';
 import { ConfirmDialogComponent } from '../shared/components/confirm-dialog/confirm-dialog.component';
 
 @Component({
@@ -20,6 +21,7 @@ export class TecnicosComponent implements OnInit, OnDestroy {
     'cpf',
     'dataCriacao',
     'detalhe',
+    'chamados',
     'acoes',
   ];
 
@@ -36,6 +38,13 @@ export class TecnicosComponent implements OnInit, OnDestroy {
     this.dialog.open(TecnicoDetailComponent, {
       width: '500px',
       data: { ...tecnico },
+    });
+  }
+
+  openChamados(id: number): void {
+    this.dialog.open(TecnicoAndamentoComponent, {
+      data: id,
+      width: '950px',
     });
   }
 

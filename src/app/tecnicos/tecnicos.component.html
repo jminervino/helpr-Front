@@ -48,6 +48,14 @@
           </a>
         </td>
       </ng-container>
+      <ng-container matColumnDef="chamados">
+        <th mat-header-cell *matHeaderCellDef>Chamados</th>
+        <td mat-cell *matCellDef="let element">
+          <a mat-icon-button color="accent" (click)="openChamados(element.id)" matTooltip="Chamados em andamento">
+            <mat-icon>assignment</mat-icon>
+          </a>
+        </td>
+      </ng-container>
       <ng-container matColumnDef="acoes">
         <th mat-header-cell *matHeaderCellDef>Ações</th>
         <td mat-cell *matCellDef="let element">

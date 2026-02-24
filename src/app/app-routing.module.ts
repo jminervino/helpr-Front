@@ -4,9 +4,9 @@ import { HeaderComponent } from './core/components/header/header.component';
 import { NotFoundComponent } from './core/components/not-found/not-found.component';
 import { AuthGuard } from './core/guards/auth.guard';
 import { AuthLogadoGuard } from './core/guards/logged-in.guard';
-import { RoleGuardGuard } from './core/guards/role.guard';
 
 const routes: Routes = [
+  { path: '', redirectTo: 'landing', pathMatch: 'full' },
   {
     path: 'landing',
     loadChildren: () => import('./landing/landing.module').then((m) => m.LandingModule),
@@ -42,12 +42,7 @@ const routes: Routes = [
         loadChildren: () =>
           import('./tecnicos/tecnicos.module').then((m) => m.TecnicosModule),
       },
-      {
-        path: 'admin',
-        loadChildren: () =>
-          import('./admin/admin.module').then((m) => m.AdminModule),
-        canActivate: [RoleGuardGuard]
-      },
+
       {
         path: 'manual-do-software',
         loadChildren: () =>

@@ -9,6 +9,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 import { NgxMaskModule } from 'ngx-mask';
 import { TecnicoDetailComponent } from './components/tecnico-detail/tecnico-detail.component';
+import { TecnicoAndamentoComponent } from './components/tecnico-andamento/tecnico-andamento.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -25,6 +26,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     TecnicoUpdateComponent,
     TecnicoCreateComponent,
     TecnicoDetailComponent,
+    TecnicoAndamentoComponent,
   ],
   imports: [
     CommonModule,

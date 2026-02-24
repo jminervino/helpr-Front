@@ -34,9 +34,13 @@ export class ChamadosService {
   findById(id: number): Observable<Chamado> {
     return this.http.get<Chamado>(`${this.chamadosUrl}/${id}`);
   }
-  findReportChamadoCliente(id: number){
-    return this.http.get<Chamado[]>(`${this.chamadosRelatorio}/cliente/${id}`)
-      }
+  findReportChamadoCliente(id: number) {
+    return this.http.get<Chamado[]>(`${this.chamadosRelatorio}/cliente/${id}`);
+  }
+
+  findReportChamadoTecnico(id: number) {
+    return this.http.get<Chamado[]>(`${this.chamadosRelatorio}/tecnico/${id}`);
+  }
 
 
   create(chamado: ChamadoCreatePayload) {

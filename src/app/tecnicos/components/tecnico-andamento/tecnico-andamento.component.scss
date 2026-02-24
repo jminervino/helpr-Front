@@ -1,0 +1,13 @@
+.dialogCham {
+  display: flex;
+  justify-content: space-between;
+}
+table th {
+  height: 60px;
+  background: var(--color-primary-900);
+  color: var(--color-text-inverse);
+  font-size: var(--font-size-md);
+}
+tr:nth-child(even) {
+  background: var(--color-neutral-300);
+}

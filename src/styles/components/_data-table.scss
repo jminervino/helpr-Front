@@ -4,14 +4,36 @@
 
 .data-table-container {
   border-radius: var(--radius-lg);
-  overflow: hidden;
+  // overflow: clip preserves border-radius sem bloquear o scroll filho
+  overflow: clip;
   box-shadow: var(--shadow-sm);
   background: var(--color-surface);
 }
 
+// table-layout: fixed + min-width garantem largura previsível.
+// Em telas pequenas o .table-responsive scrollará horizontalmente.
 .data-table-container table {
   width: 100%;
-  min-width: 600px;
+  min-width: 640px;
+  table-layout: fixed;
+}
+
+// ---------------------------------------------------------------------------
+// Larguras das colunas (aplicadas em th e td via classe Angular Material)
+// ---------------------------------------------------------------------------
+.data-table-container .mat-column-id       { width: 56px; }
+.data-table-container .mat-column-titulo   { width: 22%; }
+.data-table-container .mat-column-status   { width: 120px; }
+.data-table-container .mat-column-prioridade { width: 120px; }
+.data-table-container .mat-column-acoes    { width: 96px; }
+// observacoes ocupa o espaço restante (sem width = auto com table-layout: fixed)
+
+// Colunas de texto longo: truncar com ellipsis
+.data-table-container .mat-column-titulo td,
+.data-table-container .mat-column-observacoes td {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .data-table-container tr.mat-header-row {
@@ -25,11 +47,6 @@
   font-weight: var(--font-weight-medium);
   letter-spacing: var(--letter-spacing-wide);
   padding: var(--space-3) var(--space-4);
-  min-width: 100px;
-}
-
-.data-table-container th.col-id {
-  min-width: 30px;
 }
 
 .data-table-container tr.mat-row {
@@ -52,7 +69,9 @@
 }
 
 .data-table-container .table-responsive {
+  width: 100%;
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .data-table-container .actions-cell {

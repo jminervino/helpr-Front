@@ -1,0 +1,209 @@
+:host {
+  display: block;
+}
+
+// ---------------------------------------------------------------------------
+// Layout — sem padding extra, o .page-container pai já gerencia isso
+// ---------------------------------------------------------------------------
+.cd-layout {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+// ---------------------------------------------------------------------------
+// Hero Card
+// ---------------------------------------------------------------------------
+.cd-hero {
+  background: var(--color-surface);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  border-left: 5px solid var(--color-primary-500);
+
+  &--aberto    { border-left-color: #2196f3; }
+  &--andamento { border-left-color: #ff9800; }
+  &--encerrado { border-left-color: #4caf50; }
+}
+
+.cd-hero__body {
+  padding: var(--space-8);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+
+  @media (max-width: 600px) {
+    padding: var(--space-5);
+  }
+}
+
+.cd-hero__id {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-secondary);
+  letter-spacing: var(--letter-spacing-wide);
+  font-family: monospace;
+}
+
+.cd-hero__title {
+  margin: 0;
+  font-size: 1.75rem;
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+  line-height: 1.25;
+
+  @media (max-width: 600px) {
+    font-size: var(--font-size-xl);
+  }
+}
+
+.cd-hero__chips {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+// ---------------------------------------------------------------------------
+// Info Grid
+// ---------------------------------------------------------------------------
+.cd-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-6);
+
+  @media (max-width: 700px) {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Panel (card sem conflito com .detail-card global)
+// ---------------------------------------------------------------------------
+.cd-panel {
+  background: var(--color-surface);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-sm);
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.cd-panel__header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-wide);
+
+  mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+    color: var(--color-primary-500);
+  }
+}
+
+.cd-panel__text {
+  margin: 0;
+  font-size: var(--font-size-base);
+  color: var(--color-text-primary);
+  line-height: var(--line-height-relaxed);
+  white-space: pre-wrap;
+}
+
+// ---------------------------------------------------------------------------
+// Info List
+// ---------------------------------------------------------------------------
+.cd-info-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.cd-info-row {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+}
+
+.cd-info-row__icon {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+  color: var(--color-primary-500);
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+.cd-info-row__content {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.cd-info-row__label {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+  font-weight: var(--font-weight-medium);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-wide);
+}
+
+.cd-info-row__value {
+  font-size: var(--font-size-base);
+  color: var(--color-text-primary);
+  font-weight: var(--font-weight-medium);
+}
+
+// ---------------------------------------------------------------------------
+// Actions
+// ---------------------------------------------------------------------------
+.cd-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+
+  @media (max-width: 500px) {
+    flex-direction: column-reverse;
+
+    a {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Error State
+// ---------------------------------------------------------------------------
+.cd-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  padding: var(--space-12) var(--space-8);
+  text-align: center;
+}
+
+.cd-error__icon {
+  font-size: 56px;
+  width: 56px;
+  height: 56px;
+  color: #f44336;
+  opacity: 0.7;
+}
+
+.cd-error__msg {
+  margin: 0;
+  font-size: var(--font-size-md);
+  color: var(--color-text-secondary);
+}

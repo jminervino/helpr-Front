@@ -27,33 +27,33 @@ export class LandingComponent {
   features: Feature[] = [
     {
       icon: 'assignment',
-      title: 'Gestao de Chamados',
+      title: 'Gestão de Chamados',
       description: 'Crie, acompanhe e resolva chamados com prioridade e status em tempo real.',
     },
     {
       icon: 'people',
       title: 'Cadastro de Clientes',
-      description: 'Gerencie clientes com perfis, historico de chamados e informacoes centralizadas.',
+      description: 'Gerencie clientes com perfis, histórico de chamados e informações centralizadas.',
     },
     {
       icon: 'engineering',
-      title: 'Equipe Tecnica',
-      description: 'Atribua tecnicos aos chamados e acompanhe a produtividade da equipe.',
+      title: 'Equipe Técnica',
+      description: 'Atribua técnicos aos chamados e acompanhe a produtividade da equipe.',
     },
     {
       icon: 'bar_chart',
       title: 'Dashboard em Tempo Real',
-      description: 'Visualize metricas e estatisticas dos chamados na pagina inicial.',
+      description: 'Visualize métricas e estatísticas dos chamados na página inicial.',
     },
     {
       icon: 'security',
       title: 'Controle de Acesso',
-      description: 'Sistema de autenticacao JWT com perfis de Admin, Tecnico e Cliente.',
+      description: 'Autenticação JWT com perfis de Admin, Técnico e Cliente.',
     },
     {
       icon: 'devices',
       title: 'Design Responsivo',
-      description: 'Interface adaptavel para desktop, tablet e dispositivos moveis.',
+      description: 'Interface adaptável para desktop, tablet e dispositivos móveis.',
     },
   ];
 
@@ -68,13 +68,13 @@ export class LandingComponent {
     {
       number: '01',
       title: 'Cadastre',
-      description: 'Registre clientes e tecnicos com seus respectivos perfis de acesso.',
+      description: 'Registre clientes e técnicos com seus respectivos perfis de acesso.',
       icon: 'person_add',
     },
     {
       number: '02',
       title: 'Crie Chamados',
-      description: 'Abra chamados com titulo, prioridade, status e atribua a um tecnico.',
+      description: 'Abra chamados com título, prioridade, status e atribua a um técnico.',
       icon: 'post_add',
     },
     {
